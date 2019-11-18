@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!--SETUP GUI NODE-->
+    <node name="val2sim_gui_type2_node"   pkg="val2sim_gui"    type="val2sim_gui_type2.py"   output="screen">
+    </node>
+
+</launch>

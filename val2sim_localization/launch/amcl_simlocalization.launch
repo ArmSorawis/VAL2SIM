@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <arg name="map_folder" default="simple" doc="map type [simple, solustar]"/>
+    <arg name="map_name" default="simple_loc" doc="map type [simple_loc, solustar_loc]"/>
+    <arg name="goal_name" default="simple_goal" doc="goal type [simple_goal, solustar_goal]"/>
+
+    <arg name="map_file" default="$(find val2sim_localization)/maps/$(arg map_folder)/$(arg map_name).yaml"/>
+
+    <!-- VAL2 SIMULATION NODE -->
+    <include file="$(find val2sim_description)/launch/val2sim_description.launch" />
+
+    <!-- LOAD MAP --> 
+    <node pkg="map_server" type="map_server" name="map_server" args="$(arg map_file)">
+        <param name="frame_id" value="map"/> 
+    </node> 
+
+    <!-- AMCL NODE -->
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find val2sim_localization)/parameters/amcl_simparams.yaml" command="load"/>
+    </node>
+
+    <!-- <include file="$(find val2sim_bringup)/launch/goal_frame/$(arg goal_name).launch" /> -->
+
+    <!-- RVIZ -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find val2sim_localization)/rviz_config/amcl_simlocalization.rviz"/> -->
+
+</launch>
+

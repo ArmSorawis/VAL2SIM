@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- VAL2 SIMULATION NODE -->
+    <!-- <include file="$(find val2sim_description)/launch/val2sim_description.launch" /> -->
+
+    <!-- <arg name="map_folder" default="solustar" doc="map type [simple, solustar]"/>
+    <arg name="map_name" default="solustar_loc" doc="map type [simple_loc, solustar_loc]"/>
+    <arg name="map_file" default="$(find val2sim_localization)/maps/$(arg map_folder)/$(arg map_name).yaml"/> -->
+
+    <!-- LOAD MAP --> 
+    <!-- <node pkg="map_server" type="map_server" name="map_server" args="$(arg map_file)">
+        <param name="frame_id" value="map"/> 
+    </node> -->
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_station1"
+    args="-0.77, 2.75, 0.0, 0.0, 0.0, -0.71, 0.71 /map /station1 40"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_station2"
+    args="-0.77, 1.40, 0.0, 0.0, 0.0, -0.71, 0.71 /map /station2 40"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_charging_station"
+    args="-0.77, 3.09, 0.0, 0.0, 0.0, -0.71, 0.71 /map /charging_station 40"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_base_station"
+    args="-0.77, 3.69, 0.0, 0.0, 0.0, 0.71, 0.71 /map /base_station 40"/>
+    
+    
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find val2sim_bringup)/rviz_config/view_goalFrame.rviz">
+    </node> -->
+    
+</launch>

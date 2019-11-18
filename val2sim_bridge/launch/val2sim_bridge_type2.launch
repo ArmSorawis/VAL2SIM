@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+        <arg name="port" value="8080"/>
+    </include>
+
+    <!--SETUP VAL2 BRIDGE NODE-->
+    <node name="sim_bridge_subscriber_type2_node"   pkg="val2sim_bridge"    type="sim_bridge_subscriber_type2.py" output="screen"/>
+
+    <!--SETUP VAL2 BRIDGE NODE-->
+    <node name="pause_navigation_node"   pkg="val2sim_bridge"    type="pause_navigation.py"/>
+
+</launch>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Convert an xacro and put on parameter server -->
+  <!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find pr2_description)/robots/pr2.urdf.xacro" /> -->
+
+  <!-- Spawn the sample robot model in to the world -->
+  <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model pr2" /> -->
+
+  <!-- Spawn the val2 robot model in to the world -->
+  <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find val2_description)/urdf/val2.urdf -urdf -z 1 -model val2bot" /> -->
+
+  <!-- Spawn the simple robot model in to the world -->
+  <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find val2_description)/urdf/simple_bot.urdf -urdf -z 1 -model simple_bot" /> -->
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find val2sim_gazebo)/worlds/simple.world"/>
+    <!-- more default parameters can be changed here -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="recording" value="false"/>
+    <arg name="debug" value="false"/>
+    <arg name="verbose" value="false"/>
+  </include>
+
+</launch>

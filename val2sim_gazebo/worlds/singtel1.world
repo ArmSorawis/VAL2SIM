@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://singtel_floorplan/singtel_floor1</uri>
+      <name>singtel_floor1</name>
+    </include>
+    <!-- <include>
+      <uri>model://simple_robot</uri>
+    </include> -->
+  </world>
+</sdf>

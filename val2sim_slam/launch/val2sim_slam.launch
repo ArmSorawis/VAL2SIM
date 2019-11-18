@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- ARGUMENTS -->
+    <arg name="slam_methods" default="sim_cartographer" doc="slam type [sim_gmapping, sim_cartographer]"/>
+
+    <!-- SLAM: Gmapping, Cartographer, Hector -->
+    <include file="$(find val2sim_slam)/launch/$(arg slam_methods).launch"/>
+
+    <!-- RVIZ -->
+    <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find val2_slam)/rviz_config/$(arg slam_methods).rviz"/>
+
+</launch>

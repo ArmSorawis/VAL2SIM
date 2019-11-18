@@ -1,0 +1,11 @@
+-0.77, 2.75, 0.0, 0.0, 0.0, -0.71, 0.71
+-0.77, 1.40, 0.0, 0.0, 0.0, -0.71, 0.71
+-0.77, 3.69, 0.0, 0.0, 0.0, 0.71,  0.71
+-0.77, 3.69, 0.0, 0.0, 0.0, -0.71, 0.71
+
+goal : [position_x, position_y, position_z, orientation_x, orientation_y, orientation_z, orientation_w]
+
+1. Station1
+2. Station2
+3. Base Station
+4. Charging 

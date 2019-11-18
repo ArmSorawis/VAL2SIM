@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="linear_vel_max" default="0.35"/>
+    <arg name="linear_vel_step" default="0.05"/>
+    <arg name="angular_vel_max" default="0.55"/>
+    <arg name="angular_vel_step" default="0.05"/>
+
+    <node pkg="sim_teleop_keyboard" name="sim_teleop_key_node" type="sim_teleop_key.py" output="screen">
+        <param name="linear_vel_max" value="$(arg linear_vel_max)"/>
+        <param name="angular_vel_max" value="$(arg angular_vel_max)"/>
+        <param name="linear_vel_step" value="$(arg linear_vel_step)"/>
+        <param name="angular_vel_step" value="$(arg angular_vel_step)"/>
+        <!-- <remap from="/key_vel" to="/val2/base_controller/cmd_vel"/> -->
+    </node>
+
+</launch>
