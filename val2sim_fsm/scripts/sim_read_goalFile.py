@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
+from os.path import expanduser
+
+home = expanduser("~")
+
 def sim_read_goal():
-    goal_path = "/home/csorawit/val2sim_ws/src/val2sim_navigation/text/"
+    goal_path = "{}/val2sim_ws/src/val2sim_navigation/text/".format(home)
     goal_filename = "goal_simulation_simple.txt"
     path = goal_path + goal_filename
     

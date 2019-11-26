@@ -2,6 +2,9 @@
 
 from findNext_angle import find_nextAngle
 from findCurrent_angle import find_currentAngle
+from os.path import expanduser
+
+home = expanduser("~")
 
 def sim_read_action(current_station, next_station, state):
 
@@ -21,23 +24,23 @@ def sim_read_action(current_station, next_station, state):
 
     elif current_station in station_list and state == "play_sound":
         if current_station == "initial_station":
-            soundPath = '/home/csorawit/val2_ws/src/val2_sound/sound/'
+            soundPath = '{}/val2sim_ws/src/val2sim_sound/sound/'.format(home)
             soundFilename = "system_checking.wav" 
             sound_cycleTime = 6
 
         elif current_station == "station1":
-            soundPath = '/home/csorawit/val2_ws/src/val2_sound/sound/'
+            soundPath = '{}/val2sim_ws/src/val2sim_sound/sound/'.format(home)
             soundFilename = "station1.wav" 
             sound_cycleTime = 2
             
 
         elif current_station == "station2":
-            soundPath = '/home/csorawit/val2_ws/src/val2_sound/sound/'
+            soundPath = '{}/val2sim_ws/src/val2sim_sound/sound/'.format(home)
             soundFilename = "station2.wav" 
             sound_cycleTime = 2
 
         elif current_station == "base_station":
-            soundPath = '/home/csorawit/val2_ws/src/val2_sound/sound/'
+            soundPath = '{}/val2sim_ws/src/val2sim_sound/sound/'.format(home)
             soundFilename = "base_station.wav" 
             sound_cycleTime = 4
 

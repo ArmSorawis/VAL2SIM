@@ -6,14 +6,18 @@ import roslaunch
 from functools import partial
 from std_msgs.msg import Int32MultiArray
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
+from os.path import expanduser
+
+home = expanduser("~")
+
 
 class MainWindow(QtWidgets.QMainWindow):
 	def __init__(self):
 		super(MainWindow,self).__init__()
-		uic.loadUi("/home/csorawit/val2sim_ws/src/val2sim_gui/ui/val2sim.ui",self)
+		uic.loadUi("{}/val2sim_ws/src/val2sim_gui/ui/val2sim.ui".format(home),self)
 		self.setWindowTitle('VAL2')
 
-		pixmap_val2 = QtGui.QPixmap('/home/csorawit/val2sim_ws/src/val2sim_gui/picture/val2sim.png')
+		pixmap_val2 = QtGui.QPixmap('{}/val2sim_ws/src/val2sim_gui/picture/val2sim.png'.format(home))
 		self.label_val2_pic.setPixmap(pixmap_val2)
 
 		self.enterButton.clicked.connect(self.buttonEnter_clicked)
