@@ -18,9 +18,6 @@ class obstacle_detection():
 		rospy.init_node('sim_obstacleDetection_type2_node', disable_signals=True)
 		self.cmdvel_publisher = rospy.Publisher('break_vel', Twist, queue_size=10)
 		self.emer_publisher = rospy.Publisher('silent', String, queue_size=10)
-		
-		self.scan_range = 100 
-		self.scan_fov = 50
 
 		self.first_time = True
 		self.start_time = 0.0
@@ -31,11 +28,6 @@ class obstacle_detection():
 		self.start_obstacle_time = 0.0
 		self.interval_obstacle_time = 0.0
 		self.waiting_obstacle_time = 10.0 # Wait for 10 second then close the obstacle avoidance
-
-		# self.waitAfter_emerOperate = True
-		# self.start_waitAfter_emerOperate_time = 0
-		# self.interval_waitAfter_emerOperate_time = 0
-		# self.delay4avoidance = 10.0 # Wait for 10 second then on the obstacle avoidance
 
 		self.ready4avoidance = False
 		self.emer_round = 0

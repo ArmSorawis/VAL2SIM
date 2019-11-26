@@ -213,18 +213,13 @@ class goalAlignment(smach.State):
 class wait4nextround(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
-							outcomes=['press','not_press'])
+							outcomes=['finished_process'])
 
 
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state wait for user')
-		
-		user_input = raw_input("Continue press 'y' if not press 'n' > ")
-		if user_input == "y" or user_input == "Y":
-			return 'press'
-		elif user_input == 'n' or user_input == "N":
-			return 'not_press'
+		return 'finished_process'
 
 
 def main():
@@ -262,7 +257,7 @@ def main():
 											'goalList_output':'goal_list'})
 
 		smach.StateMachine.add('WAIT4NEXTROUND', wait4nextround(),
-								transitions={'press':'SYSTEM_AVAILABILITY','not_press':'shutdown'})
+								transitions={'finished_process':'shutdown'})
 
 
 		sm_act = smach.StateMachine(outcomes=['align_finished', 'all_finished'])

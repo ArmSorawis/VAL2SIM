@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- RVIZ CONFIG -->
+    <arg name="rviz_config" default="$(find val2sim_description)/rviz_config/val2sim_gazebo.rviz"/>
+
+    <!-- VAL2 SIMULATION NODE -->
+    <include file="$(find val2sim_description)/launch/val2sim_ces_description.launch" />
+
+    <!-- VAL2 SOUND NODE -->
+    <include file="$(find val2sim_sound)/launch/val2sim_soundplay.launch" />
+
+    <!-- VAL2 BRIDGE NODE -->
+    <include file="$(find val2sim_bridge)/launch/val2sim_bridge_ces.launch" />
+
+    <!-- GUI NODE -->
+    <include file="$(find val2sim_gui)/launch/val2sim_gui_ces.launch" />
+
+    <!-- RVIZ -->
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(arg rviz_config)"/>
+
+</launch>

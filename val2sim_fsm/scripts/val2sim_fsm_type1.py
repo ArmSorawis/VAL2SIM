@@ -22,9 +22,9 @@ class systemAvailability(smach.State):
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state system availability')
+		rospy.loginfo('Robot ready to use')
 		sim_read_action("initial_station", None, "play_sound")
 
-		rospy.loginfo('Robot ready to use')
 		sound_node = roslaunch.core.Node(package='val2sim_sound', 
 										 node_type='val2sim_soundplay.py', 
 										 name='val2sim_soundplay_node')
@@ -213,19 +213,14 @@ class goalAlignment(smach.State):
 class wait4nextround(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
-							outcomes=['press','not_press'])
+							outcomes=['finished_process'])
 
 
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state wait for user')
+		return 'finished_process'
 		
-		user_input = raw_input("Continue press 'y' if not press 'n' > ")
-		if user_input == "y" or user_input == "Y":
-			return 'press'
-		elif user_input == 'n' or user_input == "N":
-			return 'not_press'
-
 
 def main():
 	goal_data = sim_read_goal()
@@ -262,7 +257,7 @@ def main():
 											'goalList_output':'goal_list'})
 
 		smach.StateMachine.add('WAIT4NEXTROUND', wait4nextround(),
-								transitions={'press':'SYSTEM_AVAILABILITY','not_press':'shutdown'})
+								transitions={'finished_process':'shutdown'})
 
 
 		sm_act = smach.StateMachine(outcomes=['align_finished', 'all_finished'])

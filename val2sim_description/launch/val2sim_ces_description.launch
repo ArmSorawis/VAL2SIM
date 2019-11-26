@@ -4,21 +4,13 @@
     <!-- RVIZ CONFIG -->
     <arg name="rviz_config" default="$(find val2sim_description)/rviz_config/val2sim_gazebo.rviz"/>
 
-    <!-- Robot pose solustar map-->
-    <!-- <arg name="x" default="-0.761312365532"/>
-    <arg name="y" default="3.68825340271"/>
+    <!-- Robot initial pose -->
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
     <arg name="z" default="0"/>
     <arg name="roll" default="0"/>
     <arg name="pitch" default="0"/>
-    <arg name="yaw" default="-1.57"/> -->
-
-    <!-- Robot pose simple map-->
-    <arg name="x" default="2.97812724113"/>
-    <arg name="y" default="-5.12427568436"/>
-    <arg name="z" default="0"/>
-    <arg name="roll" default="0"/>
-    <arg name="pitch" default="0"/>
-    <arg name="yaw" default="1.5646597147"/>
+    <arg name="yaw" default="0"/>
 
     <arg name="world" default="simple" doc="world type [solustar, singtel1, singtel2, singtel4_in, singtel4_out, singtel6_in, singtel6_out, simple_bot]"/>
     <arg name="robot" default="val2sim" doc="robot type [val2sim, simple_bot]"/>
@@ -37,7 +29,7 @@
 
     <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find val2_gazebo)/worlds/$(arg world).world"/>
+        <!-- <arg name="world_name" value="$(find val2_gazebo)/worlds/$(arg world).world"/> -->
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
