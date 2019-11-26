@@ -213,7 +213,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://val2_model/sensors/ydlidar/meshes/ydlidar_g4.dae"/>
+        <mesh filename="package://val2sim_model/sensors/ydlidar/meshes/ydlidar_g4.dae"/>
       </geometry>
       <material name="light_black"/>
     </visual>
@@ -221,7 +221,7 @@
       <origin rpy="0 0 0" xyz="0 0 0.02"/>
       <geometry>
         <cylinder length="0.05" radius="0.040"/>
-        <!-- <mesh filename="package://val2_model/sensors/ydlidar/meshes/ydlidar_g4.dae" /> -->
+        <!-- <mesh filename="package://val2sim_model/sensors/ydlidar/meshes/ydlidar_g4.dae" /> -->
       </geometry>
     </collision>
     <inertial>
