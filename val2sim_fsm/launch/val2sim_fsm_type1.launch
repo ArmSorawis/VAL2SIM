@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- SETUP VAL2 FSM NODE -->
+    <node name="val2sim_fsm_type1_node"  pkg="val2sim_fsm"    type="val2sim_fsm_type1.py"  output="screen"/>
+
+</launch>

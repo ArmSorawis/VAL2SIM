@@ -6,12 +6,15 @@ from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 import os
 import dynamic_reconfigure.client
+from os.path import expanduser
+
+home = expanduser("~")
 
 
 class bridge_website():
 
 	def __init__(self):
-		self.soundPath = "/home/csorawit/val2sim_ws/src/val2sim_sound/sound/"
+		self.soundPath = "{}/val2sim_ws/src/val2sim_sound/sound/".format(home)
 		self.sound_publisher = rospy.Publisher('touch_sound', String, queue_size=10)
 		self.twist = Twist()
 		self.twist.linear.x = 0

@@ -77,7 +77,7 @@ class send_cmdvel():
             print("\n")
             print("Robot state={}".format(state))
             print("Robot velocity={}".format(velocity))
-            print("target={} current={}".format(self.target, self.filter_pose))
+            print("target={} current={}".format(self.target, -self.filter_pose))
         
         if state == "stop":
             self.twist_robot.linear.x = 0

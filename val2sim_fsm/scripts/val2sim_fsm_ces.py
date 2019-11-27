@@ -216,5 +216,5 @@ def main():
 
 
 if __name__ == '__main__':
-	rospy.init_node('val2sim_ces_node', anonymous=False)
+	rospy.init_node('val2sim_fsm_ces_node', anonymous=False)
 	main()

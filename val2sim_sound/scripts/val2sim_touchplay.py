@@ -5,6 +5,10 @@ from sound_play.msg import SoundRequest
 from sound_play.libsoundplay import SoundClient
 
 from std_msgs.msg import String
+from os.path import expanduser
+
+home = expanduser("~")
+
 
 class play_touch:
 	def __init__(self):
@@ -20,13 +24,13 @@ class play_touch:
 	def play(self, user_input):
 		print(user_input.data)
 		if user_input.data == "engage_process":
-			self.touchhandle.playWave("/home/csorawit/val2sim_ws/src/val2sim_sound/sound/engage_pressed.wav", self.touch_volume)
+			self.touchhandle.playWave("{}/val2sim_ws/src/val2sim_sound/sound/engage_pressed.wav".format(home), self.touch_volume)
 			rospy.sleep(5.0)
 		elif user_input.data == "finish_process":
-			self.touchhandle.playWave("/home/csorawit/val2sim_ws/src/val2sim_sound/sound/finish_pressed.wav", self.touch_volume)
+			self.touchhandle.playWave("{}/val2sim_ws/src/val2sim_sound/sound/finish_pressed.wav".format(home), self.touch_volume)
 			rospy.sleep(2.0)
 		elif user_input.data == "wrong_process":
-			self.touchhandle.playWave("/home/csorawit/val2sim_ws/src/val2sim_sound/sound/wrong_clicked.wav", self.touch_volume)
+			self.touchhandle.playWave("{}/val2sim_ws/src/val2sim_sound/sound/wrong_clicked.wav".format(home), self.touch_volume)
 			rospy.sleep(4.0)
 
 if __name__ == '__main__':

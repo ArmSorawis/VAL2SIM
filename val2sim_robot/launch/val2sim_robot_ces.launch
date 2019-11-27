@@ -7,6 +7,9 @@
     <!-- VAL2 SIMULATION NODE -->
     <include file="$(find val2sim_description)/launch/val2sim_ces_description.launch" />
 
+    <!-- GOAL TRANSFORM -->
+    <include file="$(find val2sim_bringup)/launch/goal_frame/ces_goal.launch" />
+
     <!-- VAL2 SOUND NODE -->
     <include file="$(find val2sim_sound)/launch/val2sim_soundplay.launch" />
 
