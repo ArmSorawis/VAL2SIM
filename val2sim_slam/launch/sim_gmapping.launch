@@ -50,6 +50,6 @@
         <param name="maxRange" value="10.0"/>
     </node>
 
-	<node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find val2sim_slam)/rviz_config/sim_gmapping.rviz"/>
+	<!-- <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find val2sim_slam)/rviz_config/sim_gmapping.rviz"/> -->
     
 </launch>

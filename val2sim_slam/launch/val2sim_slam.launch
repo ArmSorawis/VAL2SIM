@@ -8,6 +8,6 @@
     <include file="$(find val2sim_slam)/launch/$(arg slam_methods).launch"/>
 
     <!-- RVIZ -->
-    <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find val2_slam)/rviz_config/$(arg slam_methods).rviz"/>
+    <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find val2sim_slam)/rviz_config/$(arg slam_methods).rviz"/>
 
 </launch>
