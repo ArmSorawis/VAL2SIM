@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <!-- VAL2 NAVIGATION -->
+    <include file="$(find val2sim_navigation)/launch/val2sim_navigation_surveillance.launch" />
+
+    <!-- GOAL TRANSFORM -->
+    <include file="$(find val2sim_bringup)/launch/goal_frame/surveillance_goal.launch" />
+
+    <!-- VAL2 SOUND NODE -->
+    <include file="$(find val2sim_sound)/launch/val2sim_soundplay.launch" />
+
+    <!-- GUI NODE -->
+    <include file="$(find val2sim_gui)/launch/val2sim_gui_surveillance.launch" />
+
+</launch>

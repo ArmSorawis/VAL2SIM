@@ -37,9 +37,9 @@ class MainWindow(QtWidgets.QMainWindow):
 	def buttonStart_clicked(self): 
 		self.label_goal1.setText("Station 1")
 		self.label_goal2.setText("Base Station")
-		# fsm_node = roslaunch.core.Node(	package='val2_fsm', 
-		# 								node_type='val2_fsm_ces.py', 
-		# 								name='val2_fsm_ces_node',
+		# fsm_node = roslaunch.core.Node(	package='val2sim_fsm', 
+		# 								node_type='val2sim_fsm_ces.py', 
+		# 								name='val2sim_fsm_ces_node',
 		# 								output='screen')
 		# fsm_launch = roslaunch.scriptapi.ROSLaunch()
 		# fsm_launch.start()

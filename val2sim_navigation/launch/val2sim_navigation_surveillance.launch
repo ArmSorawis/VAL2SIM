@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="num_floor"  default="ces"/>
+    <arg name="num_floor"  default="surveillance"/>
     <arg name="localize_method"  default="amcl"/>
     
     <arg name="map_topic" default="/map_nav"/>

@@ -166,30 +166,46 @@ Visualization Manager:
       Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
         base_footprint:
           Value: true
         base_link:
+          Value: false
+        base_station:
+          Value: true
+        charging_station:
           Value: true
         laser_base_link:
-          Value: true
+          Value: false
         laser_frame:
-          Value: true
+          Value: false
         left_wheel:
-          Value: true
+          Value: false
         map:
           Value: true
         odom:
           Value: true
         right_wheel:
+          Value: false
+        station1:
           Value: true
-      Marker Scale: 1
+        station2:
+          Value: true
+        station3:
+          Value: true
+        station4:
+          Value: true
+      Marker Scale: 2
       Name: TF
-      Show Arrows: true
+      Show Arrows: false
       Show Axes: true
       Show Names: true
       Tree:
         map:
+          base_station:
+            {}
+          charging_station:
+            {}
           odom:
             base_footprint:
               base_link:
@@ -200,6 +216,14 @@ Visualization Manager:
                   {}
                 right_wheel:
                   {}
+          station1:
+            {}
+          station2:
+            {}
+          station3:
+            {}
+          station4:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988079071
@@ -284,7 +308,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -0.004999993368983269
+      Angle: 7.450580596923828e-9
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -297,8 +321,8 @@ Visualization Manager:
       Scale: 61.86355972290039
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 2.229018211364746
-      Y: -1.4652820825576782
+      X: -0.13268841803073883
+      Y: -1.3713794946670532
     Saved: ~
 Window Geometry:
   Displays:
