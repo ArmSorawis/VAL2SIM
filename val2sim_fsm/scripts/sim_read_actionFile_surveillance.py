@@ -33,13 +33,13 @@ def sim_read_action_surveillance(current_station, next_station, state):
 
         elif current_station == "station2":
             if next_station == "station1":
-                turnDegree_nextStation = -120
+                turnDegree_nextStation = -100
             elif next_station == "station3":
-                turnDegree_nextStation = 120
+                turnDegree_nextStation = 90
             elif next_station == "station4":
-                turnDegree_nextStation = 120
+                turnDegree_nextStation = 90
             elif next_station == "base_station":
-                turnDegree_nextStation = -120
+                turnDegree_nextStation = -100
         
         elif current_station == "station3":
             if next_station == "station1":
@@ -57,7 +57,7 @@ def sim_read_action_surveillance(current_station, next_station, state):
             elif next_station == "station2":
                 turnDegree_nextStation = 180
             elif next_station == "station3":
-                turnDegree_nextStation = 180
+                turnDegree_nextStation = 100
             elif next_station == "base_station":
                 turnDegree_nextStation = 180
 

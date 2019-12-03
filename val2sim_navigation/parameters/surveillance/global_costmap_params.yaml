@@ -14,7 +14,7 @@ global_costmap:
   # cost_scaling_factor: 2.58
 
   inflation_radius: 1.75 #1.75 #1.75
-  cost_scaling_factor: 2.58 #2.58
+  cost_scaling_factor: 20 #2.58
 
   allow_unknown: true
   inflate_unknown: true
