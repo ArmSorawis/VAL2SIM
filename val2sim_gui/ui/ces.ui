@@ -348,9 +348,9 @@ color: rgb(255, 255, 255);</string>
    <widget class="QLabel" name="label_translate">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>330</x>
       <y>490</y>
-      <width>261</width>
+      <width>301</width>
       <height>61</height>
      </rect>
     </property>
@@ -363,7 +363,7 @@ color: rgb(255, 255, 255);</string>
      </font>
     </property>
     <property name="text">
-     <string>Translate in meter</string>
+     <string>Translate in centimeter</string>
     </property>
     <property name="textFormat">
      <enum>Qt::AutoText</enum>
