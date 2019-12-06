@@ -18,9 +18,22 @@ class systemAvailability(smach.State):
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state system availability')
-		rospy.loginfo('Robot ready to use')
-		sim_read_action("initial_station", None, "play_sound")
 
+		rospy.loginfo('Robot rotate around for localize the real position')
+		localize_node = roslaunch.core.Node(package='val2sim_sensor', 
+											node_type='sim_rotateBy_odom.py', 
+											name='sim_rotateBy_odom_node',
+											output="screen")
+		localize_node.args = "_rotate_target:=%d" %(360)
+		localize_launch = roslaunch.scriptapi.ROSLaunch()
+		localize_launch.start()
+		localize_process = localize_launch.launch(localize_node)
+		while localize_process.is_alive():
+			if localize_process.is_alive() == False:
+				break
+		localize_process.stop()
+
+		sim_read_action("initial_station", None, "play_sound")
 		sound_node = roslaunch.core.Node(package='val2sim_sound', 
 										 node_type='val2sim_soundplay.py', 
 										 name='val2sim_soundplay_node')
@@ -33,45 +46,67 @@ class systemAvailability(smach.State):
 			if sound_process.is_alive() == False:
 				break
 		sound_process.stop()
-
-		# rospy.loginfo('Robot rotate around for localize the real position')
-		# localize_node = roslaunch.core.Node(package='val2sim_sensor', 
-		# 									node_type='sim_rotateBy_odom.py', 
-		# 									name='sim_rotateBy_odom_node',
-		# 									output="screen")
-		# localize_node.args = "_rotate_target:=%d" %(360)
-		# localize_launch = roslaunch.scriptapi.ROSLaunch()
-		# localize_launch.start()
-		# localize_process = localize_launch.launch(localize_node)
-		# while localize_process.is_alive():
-		# 	if localize_process.is_alive() == False:
-		# 		break
-		# localize_process.stop()
+		rospy.loginfo('Robot ready to use')
 
 		userdata.goalList_output = userdata.goalList_input
 
 		return 'system_checked'
 
 
+class turn2goal(smach.State):
+	def __init__(self):
+		smach.State.__init__(self, 
+							outcomes=['turn_success'],
+							input_keys=['goalList_input'],
+							output_keys=['goalList_output'])
+
+	def execute(self, userdata):
+		print('\n')
+		rospy.loginfo('Executing state turn to goal')
+		
+		rotate_degree = rospy.get_param("/val2sim_gui_ces_node/rotate_degree", 0)
+		rospy.loginfo('Robot have been turning to {} by {} degree'.format(userdata.goalList_input[0], rotate_degree))
+
+		turn2goal_node = roslaunch.core.Node(package='val2sim_sensor', 
+											node_type='sim_rotateBy_odom.py', 
+											name='sim_rotateBy_odom_node',
+											output="screen")
+		turn2goal_node.args = "_rotate_target:=%d" %(rotate_degree)
+		turn2goal_launch = roslaunch.scriptapi.ROSLaunch()
+		turn2goal_launch.start()
+		turn2goal_process = turn2goal_launch.launch(turn2goal_node)
+		while turn2goal_process.is_alive():
+			if turn2goal_process.is_alive() == False:
+				break
+		turn2goal_process.stop()		
+		rospy.loginfo('Robot turn to goal success !!!!!!!!!!!!!')
+
+		userdata.goalList_output = userdata.goalList_input
+
+		return 'turn_success'
+
+		
 class move_forward(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
 							outcomes=['move_success'],
 							input_keys=['goalList_input'],
 							output_keys=['goalList_output'])
+		self.translate_distance = 0
 
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state move forward')
-		rospy.loginfo('Robot have been moving to {}'.format(userdata.goalList_input[0]))
-		
+		translate_meter = rospy.get_param("/val2sim_gui_ces_node/translate_meter", 300)
+		rospy.loginfo('Robot have been moving to {} by {} meter'.format(userdata.goalList_input[0], translate_meter))
+
 		sim_open_obstacleDetection_node()
 
 		move_node = roslaunch.core.Node(package='val2sim_sensor', 
-											node_type='sim_translateBy_odom.py', 
-											name='sim_translateBy_odom_node',
-											output="screen")
-		move_node.args = "_translate_target:=%d" %(200)
+										node_type='sim_translateBy_odom.py', 
+										name='sim_translateBy_odom_node',
+										output="screen")
+		move_node.args = "_translate_target:=%d" %(abs(translate_meter))
 		move_launch = roslaunch.scriptapi.ROSLaunch()
 		move_launch.start()
 		move_process = move_launch.launch(move_node)
@@ -100,7 +135,7 @@ class reach2goal(smach.State):
 		rospy.loginfo('Executing state reach to goal')
 		rospy.loginfo('Robot reach to {}'.format(userdata.goalList_input[0]))
 
-		sim_read_action("station1", None, "play_sound")
+		sim_read_action(userdata.goalList_input[0], None, "play_sound")
 
 		sound_node = roslaunch.core.Node(package='val2sim_sound', 
 										 node_type='val2sim_soundplay.py', 
@@ -131,14 +166,12 @@ class turn_around(smach.State):
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state turn around')
+		rospy.loginfo('Robot turn around {}'.format(userdata.goalList_input[0]))
+
 		if userdata.goalList_input[0] == "station1":
-			userdata.goalList_input[0] = "base_station"
 			self.rotate_angle = 180
 		elif userdata.goalList_input[0] == "base_station":
-			userdata.goalList_input[0] = "charging_station"
 			self.rotate_angle = -180
-
-		rospy.loginfo("Robot turn around to {}".format(userdata.goalList_input[0]))
 		
 		turn_node = roslaunch.core.Node(package='val2sim_sensor', 
 										node_type='sim_rotateBy_odom.py', 
@@ -162,16 +195,34 @@ class turn_around(smach.State):
 			return 'all_success'
 
 
-class wait4nextround(smach.State):
+class charging_alignment(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
-							outcomes=['finished_process'])
+							outcomes=['align_success'])
 
 
 	def execute(self, userdata):
 		print('\n')
-		rospy.loginfo('Executing state wait for user')
-		return 'finished_process'
+		rospy.loginfo('Executing state align to charge station')
+		
+		rotate_degree = rospy.get_param("/val2sim_gui_ces_node/rotate_degree", 0)
+		rospy.loginfo('Robot have been turning to charging station by {} degree'.format(-rotate_degree))
+
+		charge_node = roslaunch.core.Node(package='val2sim_sensor', 
+											node_type='sim_rotateBy_odom.py', 
+											name='sim_rotateBy_odom_node',
+											output="screen")
+		charge_node.args = "_rotate_target:=%d" %(-rotate_degree)
+		charge_launch = roslaunch.scriptapi.ROSLaunch()
+		charge_launch.start()
+		charge_process = charge_launch.launch(charge_node)
+		while charge_process.is_alive():
+			if charge_process.is_alive() == False:
+				break
+		charge_process.stop()		
+		rospy.loginfo('Robot align to chargie station success !!!!!!!!!!!!!')
+
+		return 'align_success'
 		
 
 def main():
@@ -179,7 +230,12 @@ def main():
 	sm_nav.userdata.goal_list = ["station1", "base_station"]
 	with sm_nav:
 		smach.StateMachine.add('SYSTEM_AVAILABILITY', systemAvailability(),
-								transitions={'system_checked':'MOVE_FORWARD'},
+								transitions={'system_checked':'TURN2GOAL'},
+								remapping={ 'goalList_input':'goal_list',
+											'goalList_output':'goal_list'})
+
+		smach.StateMachine.add('TURN2GOAL', turn2goal(),
+								transitions={'turn_success':'MOVE_FORWARD'},
 								remapping={ 'goalList_input':'goal_list',
 											'goalList_output':'goal_list'})
 
@@ -188,8 +244,8 @@ def main():
 								remapping={ 'goalList_input':'goal_list',
 											'goalList_output':'goal_list'})
 
-		smach.StateMachine.add('WAIT4NEXTROUND', wait4nextround(),
-								transitions={'finished_process':'shutdown'})
+		smach.StateMachine.add('CHARGING_ALIGNMENT', charging_alignment(),
+								transitions={'align_success':'shutdown'})
 
 		sm_act = smach.StateMachine(outcomes=['turn_finished', 'all_finished'])
 		sm_act.userdata.goal_list = ["station1", "base_station"]
@@ -203,9 +259,9 @@ def main():
 									transitions={'turn_success':'turn_finished', 'all_success':'all_finished'},
 									remapping={ 'goalList_input':'goal_list',
 												'goalList_output':'goal_list'})
-
+			
 		smach.StateMachine.add('SM_ACTION', sm_act,
-							   transitions={'turn_finished':'MOVE_FORWARD','all_finished':'WAIT4NEXTROUND'})
+							   transitions={'turn_finished':'MOVE_FORWARD','all_finished':'CHARGING_ALIGNMENT'})
 
 
 	sis = smach_ros.IntrospectionServer('server_name', sm_nav, 'SM_NAV/SM_ACT')

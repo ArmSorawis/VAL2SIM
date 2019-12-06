@@ -13,13 +13,13 @@
         <param name="frame_id" value="map"/> 
     </node> -->
 
-    <node pkg="tf" type="static_transform_publisher" name="map_to_station1"
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_station1"
     args="3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 /odom /station1 40"/>
 
-    <node pkg="tf" type="static_transform_publisher" name="map_to_base_station"
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_base_station"
     args="0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0 /odom /base_station 40"/>
 
-    <node pkg="tf" type="static_transform_publisher" name="map_to_charging_station"
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_charging_station"
     args="0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 /odom /charging_station 40"/>
     
     <!--  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find val2sim_bringup)/rviz_config/view_goalFrame.rviz">

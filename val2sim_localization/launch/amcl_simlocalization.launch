@@ -8,7 +8,7 @@
     <arg name="map_file" default="$(find val2sim_localization)/maps/$(arg map_folder)/$(arg map_name).yaml"/>
 
     <!-- VAL2 SIMULATION NODE -->
-    <include file="$(find val2sim_description)/launch/val2sim_description.launch" />
+    <include file="$(find val2sim_description)/launch/val2sim_simple_description.launch" />
 
     <!-- LOAD MAP --> 
     <node pkg="map_server" type="map_server" name="map_server" args="$(arg map_file)">

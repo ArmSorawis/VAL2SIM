@@ -33,7 +33,6 @@ def sim_read_action(current_station, next_station, state):
             soundFilename = "station1.wav" 
             sound_cycleTime = 2
             
-
         elif current_station == "station2":
             soundPath = '{}/val2sim_ws/src/val2sim_sound/sound/'.format(home)
             soundFilename = "station2.wav" 

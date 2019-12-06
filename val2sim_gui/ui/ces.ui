@@ -17,7 +17,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(162, 206, 230);</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="Goal">
@@ -25,7 +25,7 @@
      <rect>
       <x>20</x>
       <y>110</y>
-      <width>251</width>
+      <width>281</width>
       <height>511</height>
      </rect>
     </property>
@@ -38,7 +38,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(233, 185, 110);</string>
+     <string notr="true"/>
     </property>
     <property name="title">
      <string>Command</string>
@@ -52,9 +52,9 @@
     <widget class="QPushButton" name="startButton">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>370</y>
-       <width>181</width>
+       <x>10</x>
+       <y>240</y>
+       <width>251</width>
        <height>91</height>
       </rect>
      </property>
@@ -65,42 +65,6 @@
      </property>
      <property name="text">
       <string>Start</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="engageButton">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>100</y>
-       <width>181</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>35</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Engage</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="finishButton">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>230</y>
-       <width>181</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>35</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Finish</string>
      </property>
     </widget>
    </widget>
@@ -153,8 +117,8 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(56, 142, 255);
-background-color: rgb(85, 87, 83);</string>
+     <string notr="true">color: rgb(0, 0, 127);
+</string>
     </property>
     <property name="text">
      <string> Val2 Solustar Robot</string>
@@ -175,7 +139,7 @@ background-color: rgb(85, 87, 83);</string>
    <widget class="QLabel" name="label_goalseq_title">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>320</x>
       <y>110</y>
       <width>311</width>
       <height>61</height>
@@ -191,9 +155,7 @@ background-color: rgb(85, 87, 83);</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:rgb(45, 170, 38);
-background-color: rgb(46, 52, 54);
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Sequence</string>
@@ -214,8 +176,8 @@ background-color: rgb(46, 52, 54);
    <widget class="QLabel" name="label_goal1">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>210</y>
+      <x>400</x>
+      <y>200</y>
       <width>231</width>
       <height>51</height>
      </rect>
@@ -229,7 +191,7 @@ background-color: rgb(46, 52, 54);
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(171, 255, 191)</string>
+     <string notr="true">background-color:rgb(0, 85, 127)</string>
     </property>
     <property name="text">
      <string/>
@@ -241,8 +203,8 @@ background-color: rgb(46, 52, 54);
    <widget class="QLabel" name="label_goal2">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>300</y>
+      <x>400</x>
+      <y>290</y>
       <width>231</width>
       <height>51</height>
      </rect>
@@ -256,7 +218,7 @@ background-color: rgb(46, 52, 54);
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(171, 255, 191)</string>
+     <string notr="true">background-color:rgb(0, 85, 127)</string>
     </property>
     <property name="text">
      <string/>
@@ -268,8 +230,8 @@ background-color: rgb(46, 52, 54);
    <widget class="QLabel" name="label_1">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>210</y>
+      <x>320</x>
+      <y>200</y>
       <width>61</width>
       <height>51</height>
      </rect>
@@ -296,8 +258,8 @@ color: rgb(255, 255, 255);</string>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>300</y>
+      <x>320</x>
+      <y>290</y>
       <width>61</width>
       <height>51</height>
      </rect>
@@ -319,6 +281,101 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_rotate">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>440</y>
+      <width>221</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(238, 238, 236);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_translate">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>560</y>
+      <width>221</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(238, 238, 236);</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_rotate">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>370</y>
+      <width>261</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Rotate in degree</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
+    </property>
+    <property name="indent">
+     <number>-1</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_translate">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>490</y>
+      <width>261</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Translate in meter</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
+    </property>
+    <property name="indent">
+     <number>-1</number>
     </property>
    </widget>
   </widget>

@@ -2,30 +2,34 @@
 
 import rospy
 import roslaunch
+from sensor_msgs.msg import Joy
 from std_msgs.msg import String
 
 
 class operate_command():
 
 	def __init__(self):
-		self.rotate_target = 0 
+		self.rotate_target = 0
 
 	def toggled(self, joy_data):
-		if joy_data == "rotate_90":
-			self.rotate_target = 90
-			self.rotateRobot()
-		elif joy_data == "rotate_180":
-			self.rotate_target = 180
-			self.rotateRobot()
-		elif joy_data == "rotate_-90":
-			self.rotate_target = -90
-			self.rotateRobot()
-		elif joy_data == "rotate_360":
-			self.rotate_target = 360
-			self.rotateRobot()
-		elif joy_data == "fsm":
-			self.robotFSM()
-	
+		if joy_data.count(1) == 1:
+			if joy_data.index(1) == 0:
+				self.rotate_target = 90
+				self.rotateRobot()
+			elif joy_data.index(1) == 1:
+				self.rotate_target = 180
+				self.rotateRobot()
+			elif joy_data.index(1) == 2:
+				self.rotate_target = -90
+				self.rotateRobot()
+			elif joy_data.index(1) == 3:
+				self.rotate_target = 360
+				self.rotateRobot()
+			elif joy_data.index(1) == 9:
+				self.robotFSM()
+		elif joy_data.count(1) > 1:
+			rospy.loginfo("Please click atmost 1 button.")
+
 	def rotateRobot(self):
 		rotate_node = roslaunch.core.Node(  package='val2sim_sensor', 
 											node_type='sim_rotateBy_odom.py', 
@@ -57,18 +61,18 @@ class joycmd_subscriber(object):
 	def __init__(self):
 		self.joy_command = None
 
-	def callback(self, command):
-		self.joy_command = command.data
+	def callback(self, data):
+		self.joy_command = data.buttons
 		
 	def joycmd_listener(self):
-		rospy.Subscriber("joy_cmd", String, self.callback)
-
+		rospy.Subscriber('joy', Joy, self.callback)
+		
 
 if __name__=="__main__":
-	rospy.init_node('joy_cmd_subscriber_node')
+	rospy.init_node('sim_joycmd_subscriber_node')
 	joycmdSub_node = joycmd_subscriber()
 	joycmdSub_node.joycmd_listener()
-	
+
 	operateCommand_node = operate_command()
 	
 	rate = rospy.Rate(20)

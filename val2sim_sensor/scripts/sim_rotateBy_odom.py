@@ -12,7 +12,7 @@ class send_cmdvel():
     def __init__(self):
         self.pub = rospy.Publisher('/nav_vel', Twist, queue_size=1)
         self.command =Twist()
-        self.target = rospy.get_param("~rotate_target", 30)
+        self.target = rospy.get_param("~rotate_target", 180)
         self.diff = 0
         self.filter_degree = 0
         self.kp = 0.1

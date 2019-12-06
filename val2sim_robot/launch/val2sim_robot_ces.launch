@@ -5,7 +5,7 @@
     <arg name="rviz_config" default="$(find val2sim_description)/rviz_config/val2sim_gazebo.rviz"/>
 
     <!-- VAL2 SIMULATION NODE -->
-    <include file="$(find val2sim_description)/launch/val2sim_ces_description.launch" />
+    <include file="$(find val2sim_description)/launch/val2sim_empty_description.launch" />
 
     <!-- GOAL TRANSFORM -->
     <include file="$(find val2sim_bringup)/launch/goal_frame/ces_goal.launch" />

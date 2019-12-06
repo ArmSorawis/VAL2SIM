@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Axes -->
+  <param name="axis_linear" value="1" type="int"/>
+  <param name="axis_angular" value="0" type="int"/>
+  <param name="scale_linear" value="0.30" type="double"/>
+  <param name="scale_angular" value="0.30" type="double"/>
+  <node pkg="sim_teleop_joy" type="sim_teleop_joy" name="sim_teleop_joy_node"/>
+
+  <!-- joy filter node -->
+  <node pkg="sim_teleop_joy" type="sim_joyvel_filtered.py" name="sim_joyvel_filtered_node" output="screen"/>
+
+</launch>
