@@ -11,12 +11,15 @@ class send_cmdvel():
 
 	def __init__(self):
 		self.pub = rospy.Publisher('/nav_vel', Twist, queue_size=1)
-		self.command =Twist()
 		self.target = rospy.get_param("~translate_target", 200) #cm
 		self.diff = 0
 		self.filter_pose = 0
-		self.kp = 0.001
+		self.kp = 0.1
 		self.setPose = True
+
+		self.velocity = 0
+		self.ramp_up = True
+		self.ramped_vel = 0.05
 
 		self.twist_robot =Twist()
 		self.twist_robot.linear.x = 0
@@ -43,19 +46,22 @@ class send_cmdvel():
 			self.filter_pose = abs(robot_pose - self.first_pose)
 
 			self.diff = abs(self.target - self.filter_pose)
-			velocity = self.kp * self.diff
-			if velocity >= 0.25:
-				velocity = 0.25
-			if velocity <= 0.15:
-				velocity = 0.15
-			self.twist_robot.linear.x = velocity
+			self.velocity = (self.kp * (self.diff) * 0.25) / (self.target * self.kp)
+			if self.ramp_up == True:
+				self.ramped_vel = self.ramped_vel + 0.01
+				if self.ramped_vel >= 0.25:
+					self.ramp_up = False
+				self.velocity = self.ramped_vel
+			elif self.velocity <= 0.10:
+				self.velocity = 0.10
+			self.twist_robot.linear.x = self.velocity
 			self.pub.publish(self.twist_robot)
 			if abs(self.diff) < 1:
 				state = "stop"
 
 			print("\n")
 			print("Robot state={}".format(state))
-			print("Robot velocity={}".format(velocity))
+			print("Robot velocity={}".format(self.velocity))
 			print("target={} current={}".format(self.target, self.filter_pose))
 		
 		if state == "stop":
