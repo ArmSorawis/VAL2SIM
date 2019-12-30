@@ -2,19 +2,29 @@
 <launch>
     
     <!-- VAL2 NAVIGATION -->
+    <!-- localization, map server and move base node-->
     <include file="$(find val2sim_navigation)/launch/val2sim_navigation.launch" />
 
+    <!-- RQT_RECONFIGURE -->
+    <!-- <node name="rqt_reconfigure"  pkg="rqt_reconfigure"    type="rqt_reconfigure"/> -->
+
+    <!-- SMACH VIEWER -->
+    <!-- <node name="smach_viewer"     pkg="smach_viewer"       type="smach_viewer.py"/> -->
+
     <!-- GOAL TRANSFORM -->
-    <!-- <include file="$(find val2sim_bringup)/launch/goal_frame/solustar_goal.launch" /> -->
+    <!-- station1, station2, base station and charging station coordinate frames -->
     <include file="$(find val2sim_bringup)/launch/goal_frame/simple_goal.launch" />
 
     <!-- VAL2 SOUND NODE -->
+    <!-- sound player node, siren player node and touch player node-->
     <include file="$(find val2sim_sound)/launch/val2sim_soundplay.launch" />
 
     <!-- VAL2 BRIDGE NODE -->
+    <!-- website bridge subscriber and pause the navigation system node -->
     <include file="$(find val2sim_bridge)/launch/val2sim_bridge_type2.launch" />
 
     <!-- GUI NODE -->
+    <!-- graphic user interface node for ces show -->
     <include file="$(find val2sim_gui)/launch/val2sim_gui_type2.launch" />
 
 </launch>

@@ -1,26 +1,31 @@
 #!/usr/bin/env python
 
+# Import necessary package 
 import rospy
 from sound_play.msg import SoundRequest
 from sound_play.libsoundplay import SoundClient
-
 from std_msgs.msg import String
 from os.path import expanduser
 
+# Initialize home directory
 home = expanduser("~")
 
-
+# Class for playing desired sound when someone touching the robot touch screen
 class play_touch:
+
+	# Initial state
 	def __init__(self):
 		rospy.init_node('val2sim_touchplay_node')
 		self.touchhandle = SoundClient()
 		self.touch_volume = 1.0
 		self.listener()
 
+	# Call play function when subscribe to 'touch_sound' topic in string type
 	def listener(self):
 		rospy.Subscriber('touch_sound', String, self.play)
 		rospy.spin()
 	
+	# Play desired sound to the user depend on which button have pushed by user
 	def play(self, user_input):
 		print(user_input.data)
 		if user_input.data == "engage_process":
@@ -34,4 +39,5 @@ class play_touch:
 			rospy.sleep(4.0)
 
 if __name__ == '__main__':
+	# Call play_touch class
 	process = play_touch()

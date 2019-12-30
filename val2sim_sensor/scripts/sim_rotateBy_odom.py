@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# Import necessary package
 import rospy
 from nav_msgs.msg import Odometry
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
@@ -7,22 +8,25 @@ from geometry_msgs.msg import Twist
 import math
 import sys
  
+# Class for sending velocity command to base controller
 class send_cmdvel():
 
+    # Initial state
     def __init__(self):
+        # Publisher configuration
         self.pub = rospy.Publisher('/nav_vel', Twist, queue_size=1)
-        self.command =Twist()
+        # Initialize target angle (degree)
         self.target = rospy.get_param("~rotate_target", 180)
+        # Time variation variable 
         self.diff = 0
         self.filter_degree = 0
         self.kp = 0.1
         self.robot_velocity = 0
         self.setDegree = True
-        self.offset = 17
-
+        # Rotate around variable
         self.rotateAround_start = True
         self.round = 1
-
+        # Initialize velocity command
         self.twist_robot =Twist()
         self.twist_robot.linear.x = 0
         self.twist_robot.linear.y = 0
@@ -31,6 +35,7 @@ class send_cmdvel():
         self.twist_robot.angular.y = 0
         self.twist_robot.angular.z = 0
 
+    # Select state depend on input degree
     def selectState(self):
         if self.target > 0 and self.target <= 180:
             self.state = "rotate_left"
@@ -49,6 +54,7 @@ class send_cmdvel():
         else:
             self.state = "stop"
 
+    # Main function for rotating the robot
     def rotateRobot(self, state, degree):
         if state == "rotate_left":
             if self.setDegree == True:
@@ -191,15 +197,18 @@ class send_cmdvel():
             self.twist_robot.angular.z = 0
             self.pub.publish(self.twist_robot)
             rospy.signal_shutdown('Quit')
-            
+
+# Class for receive the odometry from odom node
 class odom_subscriber(object):
 
+    # Initial state
     def __init__(self):
         self.roll = 0.0
         self.pitch = 0.0
         self.yaw = 0.0
         self.degree = 0.0
 
+    # Storage odometry data
     def get_rotation(self, msg):
         global roll, pitch, yaw, degree
         orientation_q = msg.pose.pose.orientation
@@ -207,25 +216,29 @@ class odom_subscriber(object):
         (roll, pitch, yaw) = euler_from_quaternion (orientation_list)
         self.degree = self.rad2deg(yaw)
 
+    # Convert yaw from radian to degree
     def rad2deg(self, radians):
         pi = math.pi
         degrees = (180 * radians) / pi
         return degrees
 
+    # Call get_rotation function when subscribe to 'odom' topic in Odometry type
     def listener(self):
         rospy.Subscriber ('/val2/base_controller/odom', Odometry, self.get_rotation) #For Simulation
 
 
 if __name__=="__main__":
+    # Define node name
     rospy.init_node('sim_rotateBy_odom_node', disable_signals=True)
 
+    # Define necessary variable which calling each class
     odomSub_node = odom_subscriber()
     odomSub_node.listener()
-
     sendCmdvel_node = send_cmdvel()
     sendCmdvel_node.selectState()
     state = sendCmdvel_node.state
     
+    # Loop frequency
     r = rospy.Rate(10)
     rospy.sleep(1)
     try:

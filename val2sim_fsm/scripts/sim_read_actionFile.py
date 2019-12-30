@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 
+# Import necessary package
 from findNext_angle import find_nextAngle
 from findCurrent_angle import find_currentAngle
 from os.path import expanduser
 
+# Initialize home directory
 home = expanduser("~")
 
+# Select action for the robot 
 def sim_read_action(current_station, next_station, state):
-
     station_list = ["initial_station","station1", "station2", "base_station", "charging_station"]
-
     turnDegree_currentStation = 0
     turnDegree_nextStation = 0
-
     soundPath = None
     soundFilename = None
     sound = None

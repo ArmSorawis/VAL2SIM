@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
+# Import necessary package
 from os.path import expanduser
 
+# Initialize home directory
 home = expanduser("~")
 
+# Read goal from /val2sim_ws/src/val2sim_navigation/text/goal_simulation_solustar.txt file and keep goals in list
 def sim_read_goal():
     goal_path = "{}/val2sim_ws/src/val2sim_navigation/text/".format(home)
     goal_filename = "goal_simulation_simple.txt"
     path = goal_path + goal_filename
-    
     fil_goalList = []
     num_goal = 4
 

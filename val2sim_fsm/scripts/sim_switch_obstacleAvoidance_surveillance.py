@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
+# Import necessarry package
 import rospy
 import dynamic_reconfigure.client
 
+# Open obstacle avoidance system
 def sim_open_obstacleAvoidance():
 	client_global = dynamic_reconfigure.client.Client("/move_base/global_costmap/obstacle_layer")
 	params_global = { 'enabled' : 'True' }
@@ -20,6 +22,7 @@ def sim_open_obstacleAvoidance():
 	config_recovery = recovery_behavior.update_configuration(params_recovery)
 	config_clearing = clearing_rotation.update_configuration(params_clearing)
 	
+# Close obstacle avoidance system
 def sim_close_obstacleAvoidance():
 	client_global = dynamic_reconfigure.client.Client("/move_base/global_costmap/obstacle_layer")
 	params_global = { 'enabled' : 'False' }

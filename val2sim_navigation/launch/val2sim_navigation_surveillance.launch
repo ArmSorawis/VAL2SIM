@@ -1,21 +1,22 @@
 <?xml version="1.0"?>
 <launch>
 
+    <!-- ARGUMENTS -->
     <arg name="num_floor"  default="surveillance"/>
     <arg name="localize_method"  default="amcl"/>
-    
     <arg name="map_topic" default="/map_nav"/>
     <arg name="cmdvel_topic" default="/nav_vel"/>
     <arg name="odom_topic" default="/val2/base_controller/odom"/>
-
     <arg name="map_folder" default="simple" doc="map type [simple, solustar]"/>
     <arg name="map_name" default="simple_nav" doc="map type [simple_nav, solustar_nav]"/>
     <arg name="map_nav_file" default="$(find val2sim_navigation)/maps/$(arg map_folder)/$(arg map_name).yaml"/>
 
-    <!-- ROBOT LOCALIZATION NODE -->
+    <!-- VAL2 LOCALIZATION -->
+    <!-- val2 simulation node, map server for localization and amcl -->
     <include file="$(find val2sim_localization)/launch/$(arg localize_method)_simlocalization.launch" />
 
     <!-- MAP SERVER -->
+    <!-- map server for navigation -->
     <node pkg="map_server" name="map_nav_server" type="map_server" args="$(arg map_nav_file)">
         <param name="frame_id" value="map"/>
         <remap from="map" to="/map_nav" />
@@ -23,6 +24,7 @@
     </node>
 
     <!-- MOVE BASE NODE -->
+    <!-- navigation node -->
     <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
         <rosparam file="$(find val2sim_navigation)/parameters/$(arg num_floor)/costmap_common_params.yaml" command="load" ns="global_costmap"/>
         <rosparam file="$(find val2sim_navigation)/parameters/$(arg num_floor)/costmap_common_params.yaml" command="load" ns="local_costmap"/>
@@ -30,13 +32,13 @@
         <rosparam file="$(find val2sim_navigation)/parameters/$(arg num_floor)/move_base_params.yaml" command="load"/>
         <rosparam file="$(find val2sim_navigation)/parameters/$(arg num_floor)/base_local_planner_params.yaml" command="load"/>
         <rosparam file="$(find val2sim_navigation)/parameters/$(arg num_floor)/local_costmap_params.yaml" command="load"/>
-
         <remap from="map" to="$(arg map_topic)"/>
         <remap from="cmd_vel" to="$(arg cmdvel_topic)"/>
         <remap from="odom" to="$(arg odom_topic)"/>
     </node>
 
     <!-- RVIZ -->
+    <!-- visualization for verify robot status -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find val2sim_navigation)/rviz_config/val2sim_navigation.rviz">
     </node>
 

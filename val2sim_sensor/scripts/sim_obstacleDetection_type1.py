@@ -2,7 +2,7 @@
 
 # Wait until obstacle give a way
 
-# Important Library
+# Important necessary package
 import rospy
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
@@ -12,26 +12,31 @@ import time
 import os
 import dynamic_reconfigure.client
 
-
+# Class for detect the obstacle 
 class obstacle_detection():
+
+	# Initial state
 	def __init__(self):
+		# Define node name
 		rospy.init_node('sim_obstacleDetection_type1_node', disable_signals=True)
+		# Publisher configuration
 		self.cmdvel_publisher = rospy.Publisher('break_vel', Twist, queue_size=10)
 		self.emer_publisher = rospy.Publisher('silent', String, queue_size=10)
+		# Time variation variable
 		self.first_time = True
-		
 		self.start_time = 0.0
 		self.interval_time = 0.0
 		self.waiting_time = 10.0
-
 		self.emer_round = 0
-
+		# Call function
 		self.listener()
 
+	# Call call back function when subscribe to 'scan' topic in LaserScan type 
 	def listener(self):
 		rospy.Subscriber('scan', LaserScan, self.callback, queue_size=1000)
 		rospy.spin()
 
+	# Computing the data from lidar and select the robot state
 	def callback(self, msg):
 		obstacle_check = False
 		for i in range(590,690):
@@ -42,6 +47,7 @@ class obstacle_detection():
 				break
 		self.check_mode(obstacle_check)
 
+	# Check robot state
 	def check_mode(self, obstacle):
 		self.twist_robot = Twist()
 		self.twist_robot.linear.x = 0
@@ -84,11 +90,13 @@ class obstacle_detection():
 			self.interval_time = 0
 			self.emer_round = 0
 			pass
-			
+
+	#Convert angle from radians to degree format
 	def rad2deg(self, radians):
 		pi = math.pi
 		degrees = (180 * radians) / pi
 		return degrees
+
 
 if __name__ == '__main__':
 	process = obstacle_detection()

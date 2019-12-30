@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <launch>
 
+    <!-- SETUP WEBSOCKET NODE -->
+    <!-- connecting to port 8080 (the port number can adjust depend on the main server)-->
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
         <arg name="port" value="8080"/>
     </include>
 
     <!--SETUP VAL2 BRIDGE NODE-->
+    <!-- node for opening obstacle detection system when user touching the screen, meanwhile the robot's giving desired sound -->
     <node name="sim_bridge_subscriber_type1_node"   pkg="val2sim_bridge"    type="sim_bridge_subscriber_type1.py" output="screen"/>
 
     <!--SETUP VAL2 BRIDGE NODE-->
+    <!-- node for stoping the robot movement-->
     <node name="pause_navigation_node"   pkg="val2sim_bridge"    type="pause_navigation.py"/>
 
 </launch>

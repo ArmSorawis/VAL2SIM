@@ -13,17 +13,21 @@
         <param name="frame_id" value="map"/> 
     </node> -->
 
+    <!-- coordinate frame setting at 2.92 meters in x axis and -3.12 meters in y axis relative to map frame -->
     <node pkg="tf" type="static_transform_publisher" name="map_to_station1"
-    args="2.9247803688, -3.12210655212, 0.0, 0.0, 0.0, 0.704933751499, 0.709273153304 /map /station1 40"/>
+    args="2.92, -3.12, 0.0, 0.0, 0.0, 0.70, 0.71 /map /station1 40"/>
 
+    <!-- coordinate frame setting at 2.92 meters in x axis and 4.62 meters in y axis relative to map frame -->
     <node pkg="tf" type="static_transform_publisher" name="map_to_station2"
-    args="2.93948936462, 4.62263631821, 0.0, 0.0, 0.0, 0.704933836051, 0.709273069269 /map /station2 40"/>
+    args="2.92, 4.62, 0.0, 0.0, 0.0, 0.70, 0.71 /map /station2 40"/>
 
+    <!-- coordinate frame setting at 180 different rotation degrees relative to map frame -->
     <node pkg="tf" type="static_transform_publisher" name="map_to_base_station"
-    args="2.97812724113, -5.12427568436, 0.0, 0.0, 0.0, -0.709272932013, 0.704933974152 /map /base_station 40"/>
+    args="2.92, -5.12, 0.0, 0.0, 0.0, -0.71, 0.70 /map /base_station 40"/>
 
+    <!-- coordinate frame setting at map frame -->
     <node pkg="tf" type="static_transform_publisher" name="map_to_charging_station"
-    args="2.97812724113, -5.12427568436, 0.0, 0.0, 0.0, 0.704933836051, 0.709273069269 /map /charging_station 40"/>
+    args="2.92, -5.12, 0.0, 0.0, 0.0, 0.70, 0.71 /map /charging_station 40"/>
     
     <!--  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find val2sim_bringup)/rviz_config/view_goalFrame.rviz">
     </node> -->

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# Import necessary package 
 import rospy
 import smach
 import smach_ros
@@ -7,18 +8,22 @@ import roslaunch
 from sim_read_actionFile import sim_read_action
 from sim_switch_obstacleDetection_type1 import sim_open_obstacleDetection_node, sim_close_obstacleDetection_node
 
-
+# Class for checking robot system
 class systemAvailability(smach.State):
+
+	# Initial state
 	def __init__(self):
 		smach.State.__init__(self, 
 							outcomes=['system_checked'],
 							input_keys=['goalList_input'],
 							output_keys=['goalList_output'])
 
+	# Execution function
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state system availability')
 
+		# Robot rotate around itself
 		rospy.loginfo('Robot rotate around for localize the real position')
 		localize_node = roslaunch.core.Node(package='val2sim_sensor', 
 											node_type='sim_rotateBy_odom.py', 
@@ -33,6 +38,7 @@ class systemAvailability(smach.State):
 				break
 		localize_process.stop()
 
+		# Robot say "i'm ready to use"
 		sim_read_action("initial_station", None, "play_sound")
 		sound_node = roslaunch.core.Node(package='val2sim_sound', 
 										 node_type='val2sim_soundplay.py', 
@@ -48,25 +54,28 @@ class systemAvailability(smach.State):
 		sound_process.stop()
 		rospy.loginfo('Robot ready to use')
 
+		# Output equal to input
 		userdata.goalList_output = userdata.goalList_input
-
 		return 'system_checked'
 
-
+# Class for heading the robot to the next goal
 class turn2goal(smach.State):
+
+	# Initial state
 	def __init__(self):
 		smach.State.__init__(self, 
 							outcomes=['turn_success'],
 							input_keys=['goalList_input'],
 							output_keys=['goalList_output'])
 
+	# Execution function
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state turn to goal')
 		
+		# Robot heading to the next goal 
 		rotate_degree = rospy.get_param("/val2sim_gui_ces_node/rotate_degree", 0)
 		rospy.loginfo('Robot have been turning to {} by {} degree'.format(userdata.goalList_input[0], rotate_degree))
-
 		turn2goal_node = roslaunch.core.Node(package='val2sim_sensor', 
 											node_type='sim_rotateBy_odom.py', 
 											name='sim_rotateBy_odom_node',
@@ -81,12 +90,14 @@ class turn2goal(smach.State):
 		turn2goal_process.stop()		
 		rospy.loginfo('Robot turn to goal success !!!!!!!!!!!!!')
 
+		# Robot heading to the next goal 
 		userdata.goalList_output = userdata.goalList_input
-
 		return 'turn_success'
 
-		
+# Class for moving the robot to the next goal
 class move_forward(smach.State):
+
+	# Initial state
 	def __init__(self):
 		smach.State.__init__(self, 
 							outcomes=['move_success'],
@@ -94,14 +105,15 @@ class move_forward(smach.State):
 							output_keys=['goalList_output'])
 		self.translate_distance = 0
 
+	# Execution function
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state move forward')
+		
+		# Robot moving to the goal by 300 centimetres and stop when detected the obstacle
 		translate_meter = rospy.get_param("/val2sim_gui_ces_node/translate_meter", 300)
 		rospy.loginfo('Robot have been moving to {} by {} meter'.format(userdata.goalList_input[0], translate_meter))
-
 		sim_open_obstacleDetection_node()
-
 		move_node = roslaunch.core.Node(package='val2sim_sensor', 
 										node_type='sim_translateBy_odom.py', 
 										name='sim_translateBy_odom_node',
@@ -114,29 +126,31 @@ class move_forward(smach.State):
 			if move_process.is_alive() == False:
 				break
 		move_process.stop()
-
 		sim_close_obstacleDetection_node()
 
+		# When the robot reached to the goal delete that goal 
 		del userdata.goalList_input[0]
 		userdata.goalList_output = userdata.goalList_input
-
 		return 'move_success'
 
-
+# Class for verify that robot reached to goal or not
 class reach2goal(smach.State):
+
+	# Initial state
 	def __init__(self):
 		smach.State.__init__(self, 
 							outcomes=['reach_success'],
 							input_keys=['goalList_input'],
 							output_keys=['goalList_output'])
-							
+
+	# Execution function		
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state reach to goal')
+		
+		# Robot say "station 1" or "base station i need to charge my battery"
 		rospy.loginfo('Robot reach to {}'.format(userdata.goalList_input[0]))
-
 		sim_read_action(userdata.goalList_input[0], None, "play_sound")
-
 		sound_node = roslaunch.core.Node(package='val2sim_sound', 
 										 node_type='val2sim_soundplay.py', 
 										 name='val2sim_soundplay_node')
@@ -150,12 +164,14 @@ class reach2goal(smach.State):
 				break
 		sound_process.stop()
 
-		userdata.goalList_output = userdata.goalList_input
-		
+		# Output equal to input
+		userdata.goalList_output = userdata.goalList_input		
 		return 'reach_success'
 
-
+# Class for turning the robot half round 
 class turn_around(smach.State):
+
+	# Initial state
 	def __init__(self):
 		smach.State.__init__(self,
 							outcomes=['turn_success','all_success'],
@@ -163,6 +179,7 @@ class turn_around(smach.State):
 							output_keys=['goalList_output'])
 		self.rotate_angle = 0
 
+	# Execution function
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state turn around')
@@ -173,6 +190,7 @@ class turn_around(smach.State):
 		elif userdata.goalList_input[0] == "base_station":
 			self.rotate_angle = -180
 		
+		# Turn the robot to desired angle
 		turn_node = roslaunch.core.Node(package='val2sim_sensor', 
 										node_type='sim_rotateBy_odom.py', 
 										name='sim_rotateBy_odom_node',
@@ -186,28 +204,30 @@ class turn_around(smach.State):
 				break
 		turn_process.stop()
 
+		# When the robot reached to the goal delete that goal 
 		del userdata.goalList_input[0]
 		userdata.goalList_output = userdata.goalList_input
-
 		if len(userdata.goalList_input) > 0:
 			return 'turn_success'
 		elif len(userdata.goalList_input) == 0:
 			return 'all_success'
 
-
+# Class for aligning the robot to charging station
 class charging_alignment(smach.State):
+
+	# Initial state
 	def __init__(self):
 		smach.State.__init__(self, 
 							outcomes=['align_success'])
 
-
+	# Execution function
 	def execute(self, userdata):
 		print('\n')
 		rospy.loginfo('Executing state align to charge station')
 		
+		# Robot align to charging station
 		rotate_degree = rospy.get_param("/val2sim_gui_ces_node/rotate_degree", 0)
 		rospy.loginfo('Robot have been turning to charging station by {} degree'.format(-rotate_degree))
-
 		charge_node = roslaunch.core.Node(package='val2sim_sensor', 
 											node_type='sim_rotateBy_odom.py', 
 											name='sim_rotateBy_odom_node',
@@ -224,7 +244,7 @@ class charging_alignment(smach.State):
 
 		return 'align_success'
 		
-
+# Finite state machine main loop
 def main():
 	sm_nav = smach.StateMachine(outcomes=['shutdown'])
 	sm_nav.userdata.goal_list = ["station1", "base_station"]
@@ -272,5 +292,6 @@ def main():
 
 
 if __name__ == '__main__':
+	# Define node name
 	rospy.init_node('val2sim_fsm_ces_node', anonymous=False)
 	main()

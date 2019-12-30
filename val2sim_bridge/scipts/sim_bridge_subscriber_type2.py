@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# Import necessary package 
 import rospy
 import roslaunch
 from std_msgs.msg import String
@@ -8,11 +9,13 @@ import os
 import dynamic_reconfigure.client
 from os.path import expanduser
 
+# Initialize home directory
 home = expanduser("~")
 
-
+# Class for operating the robot to giving desired sound and stop moving
 class bridge_website():
 
+	# Initial state
 	def __init__(self):
 		self.soundPath = "{}/val2sim_ws/src/val2sim_sound/sound/".format(home)
 		self.sound_publisher = rospy.Publisher('touch_sound', String, queue_size=10)
@@ -26,6 +29,7 @@ class bridge_website():
 		self.interest_param_global = '/move_base/global_costmap/obstacle_layer/enabled'
 		self.interest_param_local = '/move_base/local_costmap/obstacle_layer/enabled'
 
+	# open the obstacle detection system (the robot stop moving when detected the obstacle)
 	def open_obstacleDetection_node(self):
 		nodes = os.popen("rosnode list").read().splitlines()
 		interest_node = '/movebase_client_py'
@@ -39,6 +43,7 @@ class bridge_website():
 		elif interest_node not in nodes:
 			pass
 
+	# close the obstacle detection system (after 3 sec the robot continue moving in the new path)
 	def close_obstacleDetection_node(self):
 		nodes = os.popen("rosnode list").read().splitlines()
 		interest_node = '/sim_obstacleDetection_type2_node'
@@ -47,6 +52,7 @@ class bridge_website():
 		elif interest_node not in nodes:
 			pass
 
+	# close the obstacle avoidance system (robot stop create a new path for avoiding the obstacle)
 	def close_obstacleAvoidance(self):
 		client_global = dynamic_reconfigure.client.Client("/move_base/global_costmap/obstacle_layer")
 		params_global = { 'enabled' : 'False' }
@@ -55,14 +61,13 @@ class bridge_website():
 		config_global = client_global.update_configuration(params_global)
 		config_local = client_local.update_configuration(params_local)
 
+	# function for publishing the sound command and decide to open or close obstacle detection system when receive command from local website
 	def toggled(self, website_data, change_command):
-		# rospy.loginfo("I heard user toggle {}".format(website_data))
 		if website_data == "engage":
 			if change_command == True:
 				rospy.set_param("break_cond", True)
 				self.sound_publisher.publish("engage_process")
 				self.close_obstacleDetection_node()
-				# rospy.loginfo("I'd be happy to do something for you")
 				enable_global = rospy.get_param(self.interest_param_global, None)
 				enable_local = rospy.get_param(self.interest_param_local, None)
 				if enable_global == True and enable_local == True:
@@ -76,16 +81,15 @@ class bridge_website():
 				self.open_obstacleDetection_node()
 				rospy.sleep(3)
 				rospy.set_param("break_cond", False)
-				# rospy.loginfo("Thanks, I'm at your service")
 				change_command = False
 
 		else:
 			if change_command == True:
 				rospy.set_param("break_cond", False)
-				# rospy.loginfo("Please push only the button on the screen")
 				self.sound_publisher.publish("wrong_process")
 	
 	
+# Class for subscibe command from the local website
 class touchcmd_subscriber(object):
     def __init__(self):
         self.user_command = None
@@ -97,15 +101,20 @@ class touchcmd_subscriber(object):
 		rospy.Subscriber("user_pressed", String, self.callback)
 
 if __name__ == "__main__":
+	# Initial node name
 	rospy.init_node('sim_bridge_subscriber_type2_node', anonymous=True)
+	
+	# Initial each class statement
 	touchcmdSub_node = touchcmd_subscriber()
 	touchcmdSub_node.touchScreen_listener()
-
 	bridgeSub_node = bridge_website()
+	
+	# Variable for checking the old command and new command are they same or not
 	first_cmd = True
 	change_command = True
 	rate = rospy.Rate(20)
 
+	# Loop for sending the command to operation class
 	while(not rospy.is_shutdown()):
 		user_cmd = touchcmdSub_node.user_command
 		if first_cmd == True:

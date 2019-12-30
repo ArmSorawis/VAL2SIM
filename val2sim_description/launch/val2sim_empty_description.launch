@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- RVIZ CONFIG -->
+    <!-- RVIZ ARGUMENT -->
     <arg name="rviz_config" default="$(find val2sim_description)/rviz_config/val2sim_gazebo.rviz"/>
 
-    <!-- Robot initial pose -->
+    <!-- ROBOT POSITION IN EMPTY MAP -->
     <arg name="x" default="0"/>
     <arg name="y" default="0"/>
     <arg name="z" default="0"/>
@@ -12,21 +12,27 @@
     <arg name="pitch" default="0"/>
     <arg name="yaw" default="0"/>
 
+    <!-- MAP AND ROBOT -->
     <arg name="world" default="simple" doc="world type [solustar, singtel1, singtel2, singtel4_in, singtel4_out, singtel6_in, singtel6_out, simple_bot]"/>
     <arg name="robot" default="val2sim" doc="robot type [val2sim, simple_bot]"/>
 
+    <!-- VAL2 BRINGUP -->
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find val2sim_description)/urdf/$(arg robot).xacro"/>  
 
+    <!-- SHOW UP COORDINATE FRAMES -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
         <param name="publish_frequency" value="50"/>
         <param name="use_tf_static" value="true"/>
     </node>
 
+    <!-- JOINT BRINGUP -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
 
     <!-- RVIZ -->
+    <!-- visualization for verify robot status -->
     <!-- <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(arg rviz_config)"/> -->
 
+    <!-- LAUNCH GAZEBO -->
     <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <!-- <arg name="world_name" value="$(find val2sim_gazebo)/worlds/$(arg world).world"/> -->
@@ -38,16 +44,19 @@
         <arg name="verbose" value="false"/>
     </include>
 
-    <!-- Spawn the simple robot model in to the world -->
+    <!-- SPAWN ROBOT -->
+    <!-- Spawn the val2 robot model in to the world -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find val2sim_description)/urdf/$(arg robot).urdf -urdf -model val2sim
         -x $(arg x) -y $(arg y) -z $(arg z)
         -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)">
     </node>
 
     <!-- JOY BRINGUP -->
+    <!-- joy node and joy command subscriber node -->
     <include file="$(find sim_teleop_joy)/launch/sim_joy_bringup.launch" />
 
-    <!-- ROBOT TWIST MUX NODE -->
+    <!-- VAL2 TWIST MUX NODE -->
+    <!-- order the priority of each velocity command -->
     <include file="$(find twist_mux)/launch/twist_mux.launch" />
     
 </launch>

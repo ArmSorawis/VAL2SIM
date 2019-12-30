@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 <launch>
 
-  <!-- Axes -->
-  <param name="axis_linear" value="1" type="int"/>
-  <param name="axis_angular" value="0" type="int"/>
-  <param name="scale_linear" value="0.30" type="double"/>
-  <param name="scale_angular" value="0.30" type="double"/>
+  <!-- JOY VELOCITY CONFIGURATION -->
+  <param name="axis_linear" value="1" type="int"/> <!-- 1 mean verticle axis -->
+  <param name="axis_angular" value="0" type="int"/> <!-- 0 mean horizontal axis -->
+  <param name="scale_linear" value="0.20" type="double"/> <!-- maximum linear velocity -->
+  <param name="scale_angular" value="0.30" type="double"/> <!-- maximum angular velocity -->
+  
+  <!-- JOY TELEOPERATION NODE -->
   <node pkg="sim_teleop_joy" type="sim_teleop_joy" name="sim_teleop_joy_node"/>
 
-  <!-- joy filter node -->
+  <!-- JOY VELOCITY FILTERED NODE -->
   <node pkg="sim_teleop_joy" type="sim_joyvel_filtered.py" name="sim_joyvel_filtered_node" output="screen"/>
 
 </launch>

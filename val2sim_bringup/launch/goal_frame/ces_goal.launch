@@ -13,12 +13,15 @@
         <param name="frame_id" value="map"/> 
     </node> -->
 
+    <!-- coordinate frame setting at 3 meters in front relative to the initial position -->
     <node pkg="tf" type="static_transform_publisher" name="odom_to_station1"
     args="3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 /odom /station1 40"/>
 
+    <!-- coordinate frame setting at 180 different rotation degrees relative to the initial position-->
     <node pkg="tf" type="static_transform_publisher" name="odom_to_base_station"
     args="0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0 /odom /base_station 40"/>
 
+    <!-- coordinate frame setting at the initial position-->
     <node pkg="tf" type="static_transform_publisher" name="odom_to_charging_station"
     args="0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 /odom /charging_station 40"/>
     

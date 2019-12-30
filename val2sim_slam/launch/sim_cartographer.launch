@@ -8,13 +8,15 @@
     <!-- VAL2 SIM MODEL -->
     <include file="$(find val2sim_description)/launch/val2sim_description.launch" />
     
+    <!-- CARTOGRAPHER NODE-->
     <node pkg="cartographer_ros" type="cartographer_node" name="cartographer_node" args="
         -configuration_directory $(find val2sim_description)/config
         -configuration_basename $(arg configuration_basename)" output="screen"/>
 
     <node pkg="cartographer_ros" type="cartographer_occupancy_grid_node" name="cartographer_occupancy_grid_node" args="-resolution 0.05"/>
 
-     <!-- rviz -->
+    <!-- RVIZ -->
+    <!-- visualization for verify robot status -->
     <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find val2sim_slam)/rviz_config/sim_cartographer.rviz"/>
 
 </launch>

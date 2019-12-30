@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
+# Import necessary package
 from findCurrent_angle import find_currentAngle
 
+# Select action for the robot 
 def sim_read_action_surveillance(current_station, next_station, state):
-
     station_list = ["station1", "station2", "station3", "station4", "base_station", "charging_station"]
-
     turnDegree_currentStation = 0
     turnDegree_nextStation = 0
 

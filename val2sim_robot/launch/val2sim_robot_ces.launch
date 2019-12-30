@@ -1,25 +1,30 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- RVIZ CONFIG -->
+    <!-- RVIZ CONFIGURATION -->
     <arg name="rviz_config" default="$(find val2sim_description)/rviz_config/val2sim_gazebo.rviz"/>
 
     <!-- VAL2 SIMULATION NODE -->
     <include file="$(find val2sim_description)/launch/val2sim_empty_description.launch" />
 
     <!-- GOAL TRANSFORM -->
+    <!-- station1, base station and charging station coordinate frames -->
     <include file="$(find val2sim_bringup)/launch/goal_frame/ces_goal.launch" />
 
     <!-- VAL2 SOUND NODE -->
+    <!-- sound player node, siren player node and touch player node-->
     <include file="$(find val2sim_sound)/launch/val2sim_soundplay.launch" />
 
     <!-- VAL2 BRIDGE NODE -->
+    <!-- website bridge subscriber and pause the navigation system node -->
     <include file="$(find val2sim_bridge)/launch/val2sim_bridge_ces.launch" />
 
     <!-- GUI NODE -->
+    <!-- graphic user interface node for ces show -->
     <include file="$(find val2sim_gui)/launch/val2sim_gui_ces.launch" />
 
     <!-- RVIZ -->
+    <!-- visualization for verify robot status -->
     <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(arg rviz_config)"/>
 
 </launch>

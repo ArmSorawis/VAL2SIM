@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# Import necessary package 
 import sys
 import rospy
 import roslaunch
@@ -8,43 +9,45 @@ from std_msgs.msg import Int32MultiArray
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
 from os.path import expanduser
 
+# Initialize home directory
 home = expanduser("~")
 
-
+# Class for operating the obstacle detection graphic user interface
 class MainWindow(QtWidgets.QMainWindow):
+
+	# Initial state
 	def __init__(self):
 		super(MainWindow,self).__init__()
+		# Load ui
 		uic.loadUi("{}/val2sim_ws/src/val2sim_gui/ui/val2sim.ui".format(home),self)
 		self.setWindowTitle('VAL2')
-
+		# Load val2 image
 		pixmap_val2 = QtGui.QPixmap('{}/val2sim_ws/src/val2sim_gui/picture/val2sim.png'.format(home))
 		self.label_val2_pic.setPixmap(pixmap_val2)
-
+		# Define back end for each buttons
 		self.enterButton.clicked.connect(self.buttonEnter_clicked)
-		
 		self.goal1_checkBox.stateChanged.connect(self.checkBox1)
 		self.goal2_checkBox.stateChanged.connect(self.checkBox2)
 		self.goal3_checkBox.stateChanged.connect(self.checkBox3)
 		self.goal4_checkBox.stateChanged.connect(self.checkBox4)
 		self.goal5_checkBox.stateChanged.connect(self.checkBox5)
 		self.allgoal_checkBox.stateChanged.connect(self.checkBoxAll)
-		
+		# Block user to check these 2 boxes
 		self.goal3_checkBox.blockSignals(True)
 		self.goal4_checkBox.blockSignals(True)
-
+		# Initialize goal variable
 		self.goal_list = []
 		self.num_goal = 5
-
+		# Define node name
 		rospy.init_node('val2sim_gui_type1_node', anonymous=True)
-		self.goal_publisher = rospy.Publisher('goal_sequence', Int32MultiArray, queue_size=10)
 
+	# Backend for enter button
 	def buttonEnter_clicked(self): 
 		if len(self.goal_list) > 0:
 			adding_round = self.num_goal - len(self.goal_list)
 			for index in range(adding_round):
 				self.goal_list.append(None)
-			
-			print(self.goal_list)
+			# Robot moving in term of obstacle detection state machine process
 			fsm_node = roslaunch.core.Node(	package='val2sim_fsm', 
 											node_type='val2sim_fsm_type1.py', 
 											name='val2sim_fsm_type1_node',
@@ -66,6 +69,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		else: 
 			print("Please select the goal before click 'Enter' button")
 
+	# Get text function
 	def getText(self):
 		doc = QtGui.QTextDocument()
 
@@ -84,6 +88,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		doc.setHtml(self.label_goal5.text())
 		self.label5_text = doc.toPlainText()
 	
+	# Sequencing text function
 	def textIn(self, text):
 		self.getText()
 		if self.label1_text == "":
@@ -97,6 +102,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		elif self.label5_text == "":
 			self.label_goal5.setText(text)
 
+	# Reorder text function
 	def textOut(self,text):
 		self.getText()
 		if self.label1_text == text:
@@ -121,6 +127,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		elif self.label5_text == text:
 			self.label_goal5.setText("")
 
+	# Backend for check box 1
 	def checkBox1(self, state):
 		if state == QtCore.Qt.Checked:
 			self.goal_list.append("station1")
@@ -129,6 +136,7 @@ class MainWindow(QtWidgets.QMainWindow):
 			self.goal_list.remove("station1")
 			self.textOut("Station1")
 	
+	# Backend for check box 2
 	def checkBox2(self, state):
 		if state == QtCore.Qt.Checked:
 			self.goal_list.append("station2")
@@ -137,6 +145,7 @@ class MainWindow(QtWidgets.QMainWindow):
 			self.goal_list.remove("station2")
 			self.textOut("Station2")
 
+	# Backend for check box 3
 	def checkBox3(self, state):
 		if state == QtCore.Qt.Checked:
 			self.goal_list.append("station3")
@@ -145,6 +154,7 @@ class MainWindow(QtWidgets.QMainWindow):
 			self.goal_list.remove("station3")
 			self.textOut("Station3")
 
+	# Backend for check box 4
 	def checkBox4(self, state):
 		if state == QtCore.Qt.Checked:
 			self.goal_list.append("station4")
@@ -153,6 +163,7 @@ class MainWindow(QtWidgets.QMainWindow):
 			self.goal_list.remove("station4")
 			self.textOut("Station4")
 
+	# Backend for check box 5
 	def checkBox5(self, state):
 		if state == QtCore.Qt.Checked:
 			self.goal_list.append("base_station")
@@ -161,6 +172,7 @@ class MainWindow(QtWidgets.QMainWindow):
 			self.goal_list.remove("base_station")
 			self.textOut("Base Station")
 
+	# Backend for check box all
 	def checkBoxAll(self, state):
 		if state == QtCore.Qt.Checked:
 			self.goal1_checkBox.setChecked(True)
@@ -191,6 +203,7 @@ class MainWindow(QtWidgets.QMainWindow):
 			self.label_goal5.setText("")
 
 			self.goal_list = []
+			 
 			 
 if __name__ == "__main__":
 	app = QtWidgets.QApplication(sys.argv)

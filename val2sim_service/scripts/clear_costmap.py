@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
+# Import necessary package
 import sys
 import rospy
 from val2sim_service.srv import *
 
+# Function for clear cost map for navigation system
 def clear_costmap_client():
     rospy.wait_for_service('/move_base/clear_costmaps')
     try:
@@ -15,6 +17,8 @@ def clear_costmap_client():
     finally:
         rospy.signal_shutdown("Exit")
 
+
 if __name__ == "__main__":
+    # Define node name
     rospy.init_node('clear_cost_map_node', disable_signals=True)
     clear_costmap_client()

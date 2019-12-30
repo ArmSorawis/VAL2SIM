@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!--SETUP GUI NODE-->
+    <!--SETUP SURVEILLANCE GUI NODE-->
     <node name="val2sim_gui_surveillance_node"   pkg="val2sim_gui"    type="val2sim_gui_surveillance.py"   output="screen">
     </node>
 
