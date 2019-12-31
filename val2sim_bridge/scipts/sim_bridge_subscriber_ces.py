@@ -30,7 +30,7 @@ class bridge_website():
 	# open the obstacle detection system (the robot stop moving when detected the obstacle)
 	def open_obstacleDetection_node(self):
 		nodes = os.popen("rosnode list").read().splitlines()
-		interest_node = '/movebase_client_py'
+		interest_node = '/sim_translateBy_odom_node'
 		if interest_node in nodes:
 			obstacle_node = roslaunch.core.Node(package='val2sim_sensor', 
 												node_type='sim_obstacleDetection_type1.py', 

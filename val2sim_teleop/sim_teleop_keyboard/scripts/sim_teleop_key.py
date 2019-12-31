@@ -99,27 +99,27 @@ if __name__ == "__main__":
         print msg
         while(1):
             key = getKey()
-            if key == 'w':
+            if key == 'w' or key == 'W':
                 target_linear_vel = checkLinearLimitVelocity(
                     target_linear_vel + LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel, target_angular_vel)
-            elif key == 'x':
+            elif key == 'x' or key == 'X':
                 target_linear_vel = checkLinearLimitVelocity(
                     target_linear_vel - LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel, target_angular_vel)
-            elif key == 'a':
+            elif key == 'a' or key == 'A':
                 target_angular_vel = checkAngularLimitVelocity(
                     target_angular_vel + ANG_VEL_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel, target_angular_vel)
-            elif key == 'd':
+            elif key == 'd' or key == 'D':
                 target_angular_vel = checkAngularLimitVelocity(
                     target_angular_vel - ANG_VEL_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel, target_angular_vel)
-            elif key == ' ' or key == 's':
+            elif key == ' ' or key == 's' or key == 'S':
                 target_linear_vel = 0.0
                 control_linear_vel = 0.0
                 target_angular_vel = 0.0

@@ -8,7 +8,7 @@
     <arg name="map_size" value="2500"/>
 
     <!-- VAL2 SIMULATION NODE -->
-    <include file="$(find val2sim_description)/launch/val2sim_description.launch" />
+    <include file="$(find val2sim_description)/launch/val2sim_simple_description.launch" />
     
     <!-- GMAPPING -->
     <!-- Collect the map using gmapping algorithm -->
@@ -51,6 +51,6 @@
 
     <!-- RVIZ -->
     <!-- visualization for verify robot status -->
-	<!-- <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find val2sim_slam)/rviz_config/sim_gmapping.rviz"/> -->
+	<node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find val2sim_slam)/rviz_config/sim_gmapping.rviz"/>
     
 </launch>

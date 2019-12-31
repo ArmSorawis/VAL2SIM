@@ -104,7 +104,7 @@
     <collision name="caster_front_collision">
       <origin rpy="0 0 0" xyz="0.150 0.0 -0.0164"/>
       <geometry>
-        <sphere radius="0.0635"/>
+        <sphere radius="0.0785"/>
       </geometry>
       <surface>
         <friction>
@@ -120,14 +120,14 @@
     <visual name="caster_front_visual">
       <origin rpy=" 0 0 0" xyz="0.150 0.0 -0.0164"/>
       <geometry>
-        <sphere radius="0.0635"/>
+        <sphere radius="0.0785"/>
       </geometry>
       <material name="black"/>
     </visual>
     <collision name="caster_back_collision">
       <origin rpy="0 0 0" xyz="-0.150 0.0 -0.0164"/>
       <geometry>
-        <sphere radius="0.0635"/>
+        <sphere radius="0.0785"/>
       </geometry>
       <surface>
         <friction>
@@ -143,13 +143,13 @@
     <visual name="caster_back_visual">
       <origin rpy="0 0 0" xyz="-0.150 0.0 -0.0164"/>
       <geometry>
-        <sphere radius="0.0635"/>
+        <sphere radius="0.0785"/>
       </geometry>
       <material name="black"/>
     </visual>
   </link>
   <joint name="base_link_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0 0.090"/>
+    <origin rpy="0 0 0" xyz="0.0 0 0.09"/>
     <parent link="base_footprint"/>
     <child link="base_link"/>
   </joint>
@@ -157,19 +157,19 @@
     <visual>
       <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.035" radius="0.090"/>
+        <cylinder length="0.035" radius="0.09"/>
       </geometry>
       <material name="green"/>
     </visual>
     <collision>
       <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.035" radius="0.090"/>
+        <cylinder length="0.035" radius="0.09"/>
       </geometry>
     </collision>
     <inertial>
       <mass value="10"/>
-      <inertia ixx="0.0140833333333" ixy="0" ixz="0" iyy="0.0140833333333" iyz="0" izz="0.028125"/>
+      <inertia ixx="0.0202708333333" ixy="0" ixz="0" iyy="0.0202708333333" iyz="0" izz="0.0405"/>
     </inertial>
   </link>
   <joint name="left_wheel_joint" type="continuous">
@@ -177,25 +177,25 @@
     <parent link="base_link"/>
     <child link="left_wheel"/>
     <!-- <origin xyz="${wheel_joint_offset} ${((base_width/2)+base_wheel_gap)*reflect} -0.005" rpy="0 0 0"/> -->
-    <origin rpy="0 0 0" xyz="0.0 0.267 -0.005"/>
+    <origin rpy="0 0 0" xyz="0.0 0.274 -0.005"/>
   </joint>
   <link name="right_wheel">
     <visual>
       <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.035" radius="0.090"/>
+        <cylinder length="0.035" radius="0.09"/>
       </geometry>
       <material name="green"/>
     </visual>
     <collision>
       <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.035" radius="0.090"/>
+        <cylinder length="0.035" radius="0.09"/>
       </geometry>
     </collision>
     <inertial>
       <mass value="10"/>
-      <inertia ixx="0.0140833333333" ixy="0" ixz="0" iyy="0.0140833333333" iyz="0" izz="0.028125"/>
+      <inertia ixx="0.0202708333333" ixy="0" ixz="0" iyy="0.0202708333333" iyz="0" izz="0.0405"/>
     </inertial>
   </link>
   <joint name="right_wheel_joint" type="continuous">
@@ -203,7 +203,7 @@
     <parent link="base_link"/>
     <child link="right_wheel"/>
     <!-- <origin xyz="${wheel_joint_offset} ${((base_width/2)+base_wheel_gap)*reflect} -0.005" rpy="0 0 0"/> -->
-    <origin rpy="0 0 0" xyz="0.0 -0.267 -0.005"/>
+    <origin rpy="0 0 0" xyz="0.0 -0.274 -0.005"/>
   </joint>
   <joint name="laser_base_fixed" type="fixed">
     <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->

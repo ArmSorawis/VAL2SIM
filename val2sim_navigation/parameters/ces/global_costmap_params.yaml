@@ -10,10 +10,7 @@ global_costmap:
   width: 6.0
   height: 6.0
   
-  # inflation_radius: 1.75
-  # cost_scaling_factor: 2.58
-
-  inflation_radius: 1.75 #1.75 #1.75
+  inflation_radius: 1.75 #1.75
   cost_scaling_factor: 2.58 #2.58
 
   allow_unknown: true
@@ -24,6 +21,3 @@ global_costmap:
 
   obstacle_layer:
     enabled: false
-
-  # plugins:
-  #   - {name: static_layer, type: 'costmap_2d::StaticLayer'}

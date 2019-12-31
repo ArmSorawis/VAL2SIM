@@ -6,7 +6,7 @@
     <arg name="lidar" default="ydlidar_g4" doc="lidar type [rplidar_a3, ydlidar_g4]"/>
 
     <!-- VAL2 SIM MODEL -->
-    <include file="$(find val2sim_description)/launch/val2sim_description.launch" />
+    <include file="$(find val2sim_description)/launch/val2sim_simple_description.launch" />
     
     <!-- CARTOGRAPHER NODE-->
     <node pkg="cartographer_ros" type="cartographer_node" name="cartographer_node" args="

@@ -28,5 +28,7 @@
     <!-- RVIZ -->
     <!-- visualization for verify robot status -->
     <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find val2sim_localization)/rviz_config/amcl_simlocalization.rviz"/> -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find val2sim_navigation)/rviz_config/val2sim_navigation.rviz">
+    </node>
 
 </launch>
