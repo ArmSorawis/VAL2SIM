@@ -7,10 +7,10 @@ import roslaunch
 from functools import partial
 from std_msgs.msg import String
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
-from os.path import expanduser
+import os
 
 # Initialize home directory
-home = expanduser("~")
+home = os.path.expanduser("~")
 
 # Class for operating the ces show graphic user interface
 class MainWindow(QtWidgets.QMainWindow):
@@ -26,28 +26,53 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.label_val2_pic.setPixmap(pixmap_val2)
 		# Define back end for each buttons
 		self.startButton.clicked.connect(self.buttonStart_clicked)
+		self.pauseButton.clicked.connect(self.buttonPause_clicked)
+		self.continueButton.clicked.connect(self.buttonContinue_clicked)
+		self.endButton.clicked.connect(self.buttonEnd_clicked)
 		# Define message which will be appear on gui 
 		self.label_goal1.setText("Station 1")
 		self.label_goal2.setText("Base Station")
 		# Define node name
 		rospy.init_node('val2sim_gui_ces_node', anonymous=True)
+		# Initial publisher node 
+		self.gui_command = rospy.Publisher('gui_cmd', String, queue_size = 10)  
 
 	# Backend for start button
 	def buttonStart_clicked(self):
+		print("start sent")
+		self.label_processing.setText("Start")
 		# Storage rotate angle and translate distance from front end
 		rospy.set_param('~rotate_degree', int(self.lineEdit_rotate.text()))
 		rospy.set_param('~translate_meter', int(self.lineEdit_translate.text()))
-		# Robot moving in term of ces state machine process
-		fsm_node = roslaunch.core.Node(	package='val2sim_fsm', 
-										node_type='val2sim_fsm_ces.py', 
-										name='val2sim_fsm_ces_node',
-										output='screen')
-		fsm_launch = roslaunch.scriptapi.ROSLaunch()
-		fsm_launch.start()
-		fsm_process = fsm_launch.launch(fsm_node)
-		while fsm_process.is_alive():
-			if fsm_process.is_alive() == False:
-				break
+		self.gui_command.publish("start")
+		
+
+	# Backend for pause button
+	def buttonPause_clicked(self):
+		print("pause sent")
+		self.label_processing.setText("Pause")
+		self.gui_command.publish("pause")
+		
+
+	# Backend for continue button
+	def buttonContinue_clicked(self):
+		print("continue sent")
+		self.label_processing.setText("Continue")
+		self.gui_command.publish("continue")
+		nodes = os.popen("rosnode list").read().splitlines()
+		interest_node = '/val2sim_fsm_ces_pause_node'
+		if interest_node in nodes:
+			os.system("rosnode kill {}".format(interest_node))
+
+	# Backend for end button
+	def buttonEnd_clicked(self):
+		print("end sent")
+		self.label_processing.setText("End")
+		self.gui_command.publish("end")
+		nodes = os.popen("rosnode list").read().splitlines()
+		interest_node = '/val2sim_fsm_ces_node'
+		if interest_node in nodes:
+			os.system("rosnode kill {}".format(interest_node))
 
 
 if __name__ == "__main__":

@@ -52,9 +52,9 @@
     <widget class="QPushButton" name="startButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>240</y>
-       <width>251</width>
+       <x>20</x>
+       <y>80</y>
+       <width>241</width>
        <height>91</height>
       </rect>
      </property>
@@ -67,14 +67,68 @@
       <string>Start</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pauseButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>241</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>35</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Pause</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="continueButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>300</y>
+       <width>241</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>35</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Continue</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="endButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>410</y>
+       <width>241</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>35</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>End</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QLabel" name="label_val2_pic">
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>10</y>
+      <y>30</y>
       <width>221</width>
-      <height>621</height>
+      <height>591</height>
      </rect>
     </property>
     <property name="font">
@@ -177,7 +231,7 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>200</y>
+      <y>190</y>
       <width>231</width>
       <height>51</height>
      </rect>
@@ -204,7 +258,7 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>290</y>
+      <y>270</y>
       <width>231</width>
       <height>51</height>
      </rect>
@@ -231,7 +285,7 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>200</y>
+      <y>190</y>
       <width>61</width>
       <height>51</height>
      </rect>
@@ -259,7 +313,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>290</y>
+      <y>270</y>
       <width>61</width>
       <height>51</height>
      </rect>
@@ -287,7 +341,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>440</y>
+      <y>390</y>
       <width>221</width>
       <height>27</height>
      </rect>
@@ -303,7 +357,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>560</y>
+      <y>480</y>
       <width>221</width>
       <height>27</height>
      </rect>
@@ -316,7 +370,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>370</y>
+      <y>330</y>
       <width>261</width>
       <height>61</height>
      </rect>
@@ -349,7 +403,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>490</y>
+      <y>420</y>
       <width>301</width>
       <height>61</height>
      </rect>
@@ -364,6 +418,66 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Translate in centimeter</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
+    </property>
+    <property name="indent">
+     <number>-1</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_processing">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>570</y>
+      <width>281</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(0, 85, 127)</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_process">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>520</y>
+      <width>261</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>PROCESS</string>
     </property>
     <property name="textFormat">
      <enum>Qt::AutoText</enum>

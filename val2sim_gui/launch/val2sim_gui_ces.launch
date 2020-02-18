@@ -5,4 +5,12 @@
     <node name="val2sim_gui_ces_node"   pkg="val2sim_gui"    type="val2sim_gui_ces.py"   output="screen">
     </node>
 
+    <!--SETUP CES FSM SUBSCRIBER NODE-->
+    <node name="ces_fsm_subscriber_node"   pkg="val2sim_gui"    type="ces_fsm_subscriber.py"   output="screen">
+    </node>
+
+    <!--SETUP CES PAUSE SUBSCRIBER NODE-->
+    <node name="ces_pause_subscriber_node"   pkg="val2sim_gui"    type="ces_pause_subscriber.py"   output="screen">
+    </node>
+
 </launch>
