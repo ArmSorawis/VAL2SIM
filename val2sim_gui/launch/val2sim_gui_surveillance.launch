@@ -5,4 +5,12 @@
     <node name="val2sim_gui_surveillance_node"   pkg="val2sim_gui"    type="val2sim_gui_surveillance.py"   output="screen">
     </node>
 
+    <!--SETUP SURVEILLANCE FSM SUBSCRIBER NODE-->
+    <node name="surveillance_fsm_subscriber_node"   pkg="val2sim_gui"    type="surveillance_fsm_subscriber.py"   output="screen">
+    </node>
+
+    <!--SETUP SURVEILLANCE PAUSE SUBSCRIBER NODE-->
+    <node name="surveillance_pause_subscriber_node"   pkg="val2sim_gui"    type="surveillance_pause_subscriber.py"   output="screen">
+    </node>
+
 </launch>

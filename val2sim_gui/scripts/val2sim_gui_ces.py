@@ -46,13 +46,11 @@ class MainWindow(QtWidgets.QMainWindow):
 		rospy.set_param('~translate_meter', int(self.lineEdit_translate.text()))
 		self.gui_command.publish("start")
 		
-
 	# Backend for pause button
 	def buttonPause_clicked(self):
 		print("pause sent")
 		self.label_processing.setText("Pause")
 		self.gui_command.publish("pause")
-		
 
 	# Backend for continue button
 	def buttonContinue_clicked(self):
@@ -69,10 +67,17 @@ class MainWindow(QtWidgets.QMainWindow):
 		print("end sent")
 		self.label_processing.setText("End")
 		self.gui_command.publish("end")
-		nodes = os.popen("rosnode list").read().splitlines()
-		interest_node = '/val2sim_fsm_ces_node'
-		if interest_node in nodes:
-			os.system("rosnode kill {}".format(interest_node))
+		# nodes = os.popen("rosnode list").read().splitlines()
+		# interest_node = '/val2sim_fsm_ces_node'
+		# if interest_node in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node))
+
+		nodes = os.popen("rosnode list").readlines()
+		for i in range(len(nodes)):
+			nodes[i] = nodes[i].replace("\n","")
+
+		for node in nodes:
+			os.system("rosnode kill "+ node)
 
 
 if __name__ == "__main__":

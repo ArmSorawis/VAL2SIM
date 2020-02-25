@@ -5,4 +5,12 @@
     <node name="val2sim_gui_type2_node"   pkg="val2sim_gui"    type="val2sim_gui_type2.py"   output="screen">
     </node>
 
+    <!--SETUP TYPE2 FSM SUBSCRIBER NODE-->
+    <node name="type2_fsm_subscriber_node"   pkg="val2sim_gui"    type="type2_fsm_subscriber.py"   output="screen">
+    </node>
+
+    <!--SETUP TYPE2 PAUSE SUBSCRIBER NODE-->
+    <node name="type2_pause_subscriber_node"   pkg="val2sim_gui"    type="type2_pause_subscriber.py"   output="screen">
+    </node>
+
 </launch>

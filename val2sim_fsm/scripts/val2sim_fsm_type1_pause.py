@@ -5,7 +5,7 @@ import rospy
 from geometry_msgs.msg import Twist
 
 
-class ces_pause_publisher():
+class type1_pause_publisher():
 
 	def __init__(self):
 		self.pub_robot_velocity = rospy.Publisher('pause_button_vel', Twist, queue_size = 10)  
@@ -27,8 +27,8 @@ class ces_pause_publisher():
 
 
 if __name__ == '__main__':
-	rospy.init_node('val2sim_fsm_ces_pause_node', anonymous=False)
+	rospy.init_node('val2sim_fsm_type1_pause_node', anonymous=False)
 	try:
-		ces_pause_publisher()
+		type1_pause_publisher()
 	except Exception as e:
 		print(e)
