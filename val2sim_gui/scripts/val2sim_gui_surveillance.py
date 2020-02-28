@@ -52,19 +52,27 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.label_processing.setText("Continue")
 		self.gui_command.publish("continue")
 		nodes = os.popen("rosnode list").read().splitlines()
-		interest_node = '/val2sim_fsm_surveillance_pause_node'
+		interest_node = '/surveillance_pause_subscriber_node'
 		if interest_node in nodes:
 			os.system("rosnode kill {}".format(interest_node))
+		self.gui_command.publish("continue")
 
 	# Backend for end button
 	def buttonEnd_clicked(self):
 		print("end sent")
 		self.label_processing.setText("End")
 		self.gui_command.publish("end")
-		nodes = os.popen("rosnode list").read().splitlines()
-		interest_node = '/val2sim_fsm_surveillance_node'
-		if interest_node in nodes:
-			os.system("rosnode kill {}".format(interest_node))
+		# nodes = os.popen("rosnode list").read().splitlines()
+		# interest_node = '/val2sim_fsm_surveillance_node'
+		# if interest_node in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node))
+
+		nodes = os.popen("rosnode list").readlines()
+		for i in range(len(nodes)):
+			nodes[i] = nodes[i].replace("\n","")
+
+		for node in nodes:
+			os.system("rosnode kill "+ node)
 
 
 if __name__ == "__main__":

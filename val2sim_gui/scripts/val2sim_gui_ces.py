@@ -58,9 +58,10 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.label_processing.setText("Continue")
 		self.gui_command.publish("continue")
 		nodes = os.popen("rosnode list").read().splitlines()
-		interest_node = '/val2sim_fsm_ces_pause_node'
+		interest_node = '/ces_pause_subscriber_node'
 		if interest_node in nodes:
 			os.system("rosnode kill {}".format(interest_node))
+		self.gui_command.publish("continue")
 
 	# Backend for end button
 	def buttonEnd_clicked(self):

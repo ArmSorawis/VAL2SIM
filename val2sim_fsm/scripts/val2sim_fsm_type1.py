@@ -255,6 +255,7 @@ def main():
 	goal_4 = rospy.get_param("~goal4", "None")
 	goal_5 = rospy.get_param("~goal5", "None")
 	goal_list = [goal_1, goal_2, goal_3, goal_4, goal_5]
+	print(goal_list)
 	for index in range(len(goal_list)):
 		if goal_list[index] != "None":
 			waypoint.append(goal_list[index])

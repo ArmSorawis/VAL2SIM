@@ -13,4 +13,8 @@
     <node name="ces_pause_subscriber_node"   pkg="val2sim_gui"    type="ces_pause_subscriber.py"   output="screen">
     </node>
 
+    <!--SETUP CES CONTINUE SUBSCRIBER NODE-->
+    <node name="ces_continue_subscriber_node"   pkg="val2sim_gui"    type="ces_continue_subscriber.py"   output="screen">
+    </node>
+
 </launch>

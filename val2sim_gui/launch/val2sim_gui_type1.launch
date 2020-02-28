@@ -11,6 +11,10 @@
 
     <!--SETUP TYPE1 PAUSE SUBSCRIBER NODE-->
     <node name="type1_pause_subscriber_node"   pkg="val2sim_gui"    type="type1_pause_subscriber.py"   output="screen">
+    </node> 
+
+    <!--SETUP TYPE1 CONTINUE SUBSCRIBER NODE-->
+    <node name="type1_continue_subscriber_node"   pkg="val2sim_gui"    type="type1_continue_subscriber.py"   output="screen">
     </node>
     
 </launch>
