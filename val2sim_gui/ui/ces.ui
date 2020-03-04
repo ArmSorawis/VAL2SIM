@@ -82,7 +82,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Pause</string>
+      <string>Engage</string>
      </property>
     </widget>
     <widget class="QPushButton" name="continueButton">
@@ -352,6 +352,9 @@ color: rgb(255, 255, 255);</string>
     <property name="text">
      <string/>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_translate">
     <property name="geometry">
@@ -364,6 +367,9 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(238, 238, 236);</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="label_rotate">

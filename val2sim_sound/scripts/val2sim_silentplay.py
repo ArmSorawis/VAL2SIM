@@ -17,7 +17,6 @@ class play_silent:
 	def __init__(self):
 		rospy.init_node('val2sim_silentplay_node')
 		self.silenthandle = SoundClient()
-		self.silent_volume = 1.0
 		self.silent_to_play = '{}/val2sim_ws/src/val2sim_sound/sound/obstacle.wav'.format(home)
 		self.silent_cycle_time = 7.0
 		self.listener()
@@ -30,6 +29,7 @@ class play_silent:
 	# Alert the alarm sound to the user for give way to robot
 	def play(self, data):
 		rospy.sleep(1)
+		self.silent_volume = rospy.get_param("/val2sim_gui_ces_node/silent_volume", 1.0)
 		self.silenthandle.playWave(self.silent_to_play, self.silent_volume)
 		rospy.sleep(self.silent_cycle_time)
 

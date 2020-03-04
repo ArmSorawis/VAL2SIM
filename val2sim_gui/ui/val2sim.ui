@@ -559,7 +559,7 @@ color: rgb(255, 255, 255);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="enterButton">
+   <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -628,7 +628,7 @@ color: rgb(255, 255, 255);</string>
      </font>
     </property>
     <property name="text">
-     <string>Pause</string>
+     <string>Engage</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_processing">

@@ -19,7 +19,7 @@ def ces_continue():
     while pause_process.is_alive():
         if pause_process.is_alive() == False:
             break
-
+	
 
 class gui_continue_subscriber(object):
 

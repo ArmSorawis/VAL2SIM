@@ -29,6 +29,9 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.pauseButton.clicked.connect(self.buttonPause_clicked)
 		self.continueButton.clicked.connect(self.buttonContinue_clicked)
 		self.endButton.clicked.connect(self.buttonEnd_clicked)
+		self.pauseButton.setEnabled(False)
+		self.continueButton.setEnabled(False)
+		self.endButton.setEnabled(False)
 		# Define message which will be appear on gui 
 		self.label_goal1.setText("Station 1")
 		self.label_goal2.setText("Base Station")
@@ -39,44 +42,89 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	# Backend for start button
 	def buttonStart_clicked(self):
-		print("start sent")
-		self.label_processing.setText("Start")
-		# Storage rotate angle and translate distance from front end
-		rospy.set_param('~rotate_degree', int(self.lineEdit_rotate.text()))
-		rospy.set_param('~translate_meter', int(self.lineEdit_translate.text()))
-		self.gui_command.publish("start")
-		
+		if self.lineEdit_rotate.text() != '' and self.lineEdit_translate.text() != '':
+			print("start sent")
+			self.label_processing.setText("Start")
+			# Storage rotate angle and translate distance from front end
+			rospy.set_param('~rotate_degree', int(self.lineEdit_rotate.text()))
+			rospy.set_param('~translate_meter', int(self.lineEdit_translate.text()))
+			self.startButton.setEnabled(False)
+			self.startButton.setStyleSheet("background-color: gray")
+			self.pauseButton.setEnabled(True)
+			self.continueButton.setEnabled(False)
+			self.endButton.setEnabled(True)
+			self.pauseButton.setStyleSheet("background-color: None")
+			self.continueButton.setStyleSheet("background-color: None")
+			self.endButton.setStyleSheet("background-color: None")
+			self.gui_command.publish("start")
+		elif self.lineEdit_rotate.text() == '' or self.lineEdit_translate.text() == '':
+			self.label_processing.setText("Empty")
+
 	# Backend for pause button
 	def buttonPause_clicked(self):
 		print("pause sent")
+		rospy.set_param('~silent_volume', 0.0)
 		self.label_processing.setText("Pause")
+		self.pauseButton.setEnabled(False)
+		self.pauseButton.setStyleSheet("background-color: gray")
+		self.continueButton.setEnabled(True)
+		self.endButton.setEnabled(True)
+		self.startButton.setStyleSheet("background-color: None")
+		self.continueButton.setStyleSheet("background-color: None")
+		self.endButton.setStyleSheet("background-color: None")
 		self.gui_command.publish("pause")
 
 	# Backend for continue button
 	def buttonContinue_clicked(self):
 		print("continue sent")
 		self.label_processing.setText("Continue")
-		self.gui_command.publish("continue")
+		self.continueButton.setEnabled(False)
+		self.continueButton.setStyleSheet("background-color: gray")
+		self.pauseButton.setEnabled(True)
+		self.endButton.setEnabled(True)
+		self.startButton.setStyleSheet("background-color: None")
+		self.pauseButton.setStyleSheet("background-color: None")
+		self.endButton.setStyleSheet("background-color: None")
 		nodes = os.popen("rosnode list").read().splitlines()
 		interest_node = '/ces_pause_subscriber_node'
 		if interest_node in nodes:
 			os.system("rosnode kill {}".format(interest_node))
 		self.gui_command.publish("continue")
-
+		rospy.set_param('~silent_volume', 1.0)
+		
 	# Backend for end button
 	def buttonEnd_clicked(self):
 		print("end sent")
 		self.label_processing.setText("End")
-		self.gui_command.publish("end")
-		# nodes = os.popen("rosnode list").read().splitlines()
-		# interest_node = '/val2sim_fsm_ces_node'
-		# if interest_node in nodes:
-		# 	os.system("rosnode kill {}".format(interest_node))
+		self.endButton.setEnabled(False)
+		self.pauseButton.setEnabled(False)
+		self.continueButton.setEnabled(False)
+		self.endButton.setStyleSheet("background-color: gray")
+		self.pauseButton.setStyleSheet("background-color: None")
+		self.continueButton.setStyleSheet("background-color: None")
 
+		## KILL SPECIFIC NODE
+		# nodes = os.popen("rosnode list").read().splitlines()
+		# interest_node_1 = '/sim_rotateBy_odom_node'
+		# interest_node_2 = '/sim_translateBy_odom_node'
+		# interest_node_3 = '/val2sim_soundplay_node'
+		# interest_node_4 = '/val2sim_fsm_ces_node'
+		# if interest_node_4 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_4))
+		# if interest_node_1 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_1))
+		# elif interest_node_2 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_2))
+		# elif interest_node_3 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_3))
+		# self.startButton.setEnabled(True)
+		# self.startButton.setStyleSheet("background-color: None")
+		# self.endButton.setStyleSheet("background-color: None")
+
+		## KILL ALL NODE
 		nodes = os.popen("rosnode list").readlines()
 		for i in range(len(nodes)):
 			nodes[i] = nodes[i].replace("\n","")
-
 		for node in nodes:
 			os.system("rosnode kill "+ node)
 

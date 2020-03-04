@@ -29,6 +29,9 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.pauseButton.clicked.connect(self.buttonPause_clicked)
 		self.continueButton.clicked.connect(self.buttonContinue_clicked)
 		self.endButton.clicked.connect(self.buttonEnd_clicked)
+		self.pauseButton.setEnabled(False)
+		self.continueButton.setEnabled(False)
+		self.endButton.setEnabled(False)
 		# Define node name
 		rospy.init_node('val2sim_gui_surveillance_node', anonymous=True)
 		# Initial publisher node 
@@ -38,19 +41,40 @@ class MainWindow(QtWidgets.QMainWindow):
 	def buttonStart_clicked(self):
 		print("start sent")
 		self.label_processing.setText("Start")
+		self.startButton.setEnabled(False)
+		self.startButton.setStyleSheet("background-color: gray")
+		self.pauseButton.setEnabled(True)
+		self.continueButton.setEnabled(False)
+		self.endButton.setEnabled(True)
+		self.pauseButton.setStyleSheet("background-color: None")
+		self.continueButton.setStyleSheet("background-color: None")
+		self.endButton.setStyleSheet("background-color: None")
 		self.gui_command.publish("start")
 
 	# Backend for pause button
 	def buttonPause_clicked(self):
 		print("pause sent")
 		self.label_processing.setText("Pause")
+		self.pauseButton.setEnabled(False)
+		self.pauseButton.setStyleSheet("background-color: gray")
+		self.continueButton.setEnabled(True)
+		self.endButton.setEnabled(True)
+		self.startButton.setStyleSheet("background-color: None")
+		self.continueButton.setStyleSheet("background-color: None")
+		self.endButton.setStyleSheet("background-color: None")
 		self.gui_command.publish("pause")
 		
 	# Backend for continue button
 	def buttonContinue_clicked(self):
 		print("continue sent")
 		self.label_processing.setText("Continue")
-		self.gui_command.publish("continue")
+		self.continueButton.setEnabled(False)
+		self.continueButton.setStyleSheet("background-color: gray")
+		self.pauseButton.setEnabled(True)
+		self.endButton.setEnabled(True)
+		self.startButton.setStyleSheet("background-color: None")
+		self.pauseButton.setStyleSheet("background-color: None")
+		self.endButton.setStyleSheet("background-color: None")
 		nodes = os.popen("rosnode list").read().splitlines()
 		interest_node = '/surveillance_pause_subscriber_node'
 		if interest_node in nodes:
@@ -61,16 +85,29 @@ class MainWindow(QtWidgets.QMainWindow):
 	def buttonEnd_clicked(self):
 		print("end sent")
 		self.label_processing.setText("End")
-		self.gui_command.publish("end")
-		# nodes = os.popen("rosnode list").read().splitlines()
-		# interest_node = '/val2sim_fsm_surveillance_node'
-		# if interest_node in nodes:
-		# 	os.system("rosnode kill {}".format(interest_node))
+		self.endButton.setEnabled(False)
+		self.pauseButton.setEnabled(False)
+		self.continueButton.setEnabled(False)
+		self.endButton.setStyleSheet("background-color: gray")
+		self.pauseButton.setStyleSheet("background-color: None")
+		self.continueButton.setStyleSheet("background-color: None")
 
+		## KILL SPECIFIC NODE
+		# nodes = os.popen("rosnode list").read().splitlines()
+		# interest_node_1 = '/sim_rotateBy_odom_node'
+		# interest_node_2 = '/val2sim_fsm_surveillance_node'
+		# if interest_node_2 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_2))
+		# if interest_node_1 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_1))
+		# self.startButton.setEnabled(True)
+		# self.startButton.setStyleSheet("background-color: None")
+		# self.endButton.setStyleSheet("background-color: None")
+
+		## KILL ALL NODE
 		nodes = os.popen("rosnode list").readlines()
 		for i in range(len(nodes)):
 			nodes[i] = nodes[i].replace("\n","")
-
 		for node in nodes:
 			os.system("rosnode kill "+ node)
 

@@ -25,7 +25,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		pixmap_val2 = QtGui.QPixmap('{}/val2sim_ws/src/val2sim_gui/picture/val2sim.png'.format(home))
 		self.label_val2_pic.setPixmap(pixmap_val2)
 		# Define back end for each buttons
-		self.enterButton.clicked.connect(self.buttonEnter_clicked)
+		self.startButton.clicked.connect(self.buttonStart_clicked)
 		self.pauseButton.clicked.connect(self.buttonPause_clicked)
 		self.continueButton.clicked.connect(self.buttonContinue_clicked)
 		self.endButton.clicked.connect(self.buttonEnd_clicked)
@@ -35,6 +35,9 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.goal4_checkBox.stateChanged.connect(self.checkBox4)
 		self.goal5_checkBox.stateChanged.connect(self.checkBox5)
 		self.allgoal_checkBox.stateChanged.connect(self.checkBoxAll)
+		self.pauseButton.setEnabled(False)
+		self.continueButton.setEnabled(False)
+		self.endButton.setEnabled(False)
 		# Block user to check these 2 boxes
 		self.goal3_checkBox.blockSignals(True)
 		self.goal4_checkBox.blockSignals(True)
@@ -51,14 +54,22 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.gui_goal4 = rospy.Publisher('gui_goal4', String, queue_size = 10)
 		self.gui_goal5 = rospy.Publisher('gui_goal5', String, queue_size = 10)
 
-	# Backend for enter button
-	def buttonEnter_clicked(self): 
+	# Backend for start button
+	def buttonStart_clicked(self): 
 		if len(self.goal_list) > 0:
 			adding_round = self.num_goal - len(self.goal_list)
 			for index in range(adding_round):
 				self.goal_list.append(None)
 			print("start sent")
 			self.label_processing.setText("Start")
+			self.startButton.setEnabled(False)
+			self.startButton.setStyleSheet("background-color: gray")
+			self.pauseButton.setEnabled(True)
+			self.continueButton.setEnabled(False)
+			self.endButton.setEnabled(True)
+			self.pauseButton.setStyleSheet("background-color: None")
+			self.continueButton.setStyleSheet("background-color: None")
+			self.endButton.setStyleSheet("background-color: None")
 			self.gui_command.publish("start")
 			self.gui_goal1.publish(self.goal_list[0])
 			self.gui_goal2.publish(self.goal_list[1])
@@ -85,40 +96,70 @@ class MainWindow(QtWidgets.QMainWindow):
 				if None in self.goal_list:
 					self.goal_list.remove(None)
 		else: 
-			print("Please select the goal before click 'Enter' button")
-			self.label_processing.setText("at least 1 goal")
+			self.label_processing.setText("Empty goal")
 
 	# Backend for pause button
 	def buttonPause_clicked(self):
 		print("pause sent")
+		rospy.set_param('~silent_volume', 0.0)
 		self.label_processing.setText("Pause")
+		self.pauseButton.setEnabled(False)
+		self.pauseButton.setStyleSheet("background-color: gray")
+		self.continueButton.setEnabled(True)
+		self.endButton.setEnabled(True)
+		self.startButton.setStyleSheet("background-color: None")
+		self.continueButton.setStyleSheet("background-color: None")
+		self.endButton.setStyleSheet("background-color: None")
 		self.gui_command.publish("pause")
 
 	# Backend for continue button
 	def buttonContinue_clicked(self):
 		print("continue sent")
 		self.label_processing.setText("Continue")
-		self.gui_command.publish("continue")
+		self.continueButton.setEnabled(False)
+		self.continueButton.setStyleSheet("background-color: gray")
+		self.pauseButton.setEnabled(True)
+		self.endButton.setEnabled(True)
+		self.startButton.setStyleSheet("background-color: None")
+		self.pauseButton.setStyleSheet("background-color: None")
+		self.endButton.setStyleSheet("background-color: None")
 		nodes = os.popen("rosnode list").read().splitlines()
 		interest_node = '/type2_pause_subscriber_node'
 		if interest_node in nodes:
 			os.system("rosnode kill {}".format(interest_node))
 		self.gui_command.publish("continue")
+		rospy.set_param('~silent_volume', 1.0)
 
 	# Backend for end button
 	def buttonEnd_clicked(self):
 		print("end sent")
 		self.label_processing.setText("End")
-		self.gui_command.publish("end")
-		# nodes = os.popen("rosnode list").read().splitlines()
-		# interest_node = '/val2sim_fsm_type2_node'
-		# if interest_node in nodes:
-		# 	os.system("rosnode kill {}".format(interest_node))
+		self.endButton.setEnabled(False)
+		self.pauseButton.setEnabled(False)
+		self.continueButton.setEnabled(False)
+		self.endButton.setStyleSheet("background-color: gray")
+		self.pauseButton.setStyleSheet("background-color: None")
+		self.continueButton.setStyleSheet("background-color: None")
 
+		## KILL SPECIFIC NODE
+		# nodes = os.popen("rosnode list").read().splitlines()
+		# interest_node_1 = '/sim_rotateBy_odom_node'
+		# interest_node_2 = '/val2sim_soundplay_node'
+		# interest_node_3 = '/val2sim_fsm_type2_node'
+		# if interest_node_3 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_3))
+		# if interest_node_1 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_1))
+		# elif interest_node_2 in nodes:
+		# 	os.system("rosnode kill {}".format(interest_node_2))
+		# self.startButton.setEnabled(True)
+		# self.startButton.setStyleSheet("background-color: None")
+		# self.endButton.setStyleSheet("background-color: None")
+
+		## KILL ALL NODE
 		nodes = os.popen("rosnode list").readlines()
 		for i in range(len(nodes)):
 			nodes[i] = nodes[i].replace("\n","")
-
 		for node in nodes:
 			os.system("rosnode kill "+ node)
 
