@@ -64,7 +64,11 @@ topics:
   topic   : paused_vel
   timeout : 0.5
   priority: 80
-
+-
+  name    : pause_button
+  topic   : pause_button_vel
+  timeout : 0.5
+  priority: 80
 
 go to /val2sim_ws/src/val2sim_teleop/twist_mux/launch
 # gedit twist_mux.launch
