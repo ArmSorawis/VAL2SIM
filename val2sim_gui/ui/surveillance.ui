@@ -67,6 +67,42 @@
       <string>Start</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pauseButton">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>190</y>
+       <width>181</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>35</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Pause</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="continueButton">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>300</y>
+       <width>201</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>35</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Continue</string>
+     </property>
+    </widget>
     <widget class="QPushButton" name="endButton">
      <property name="geometry">
       <rect>
@@ -83,42 +119,6 @@
      </property>
      <property name="text">
       <string>End</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="continueButton">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>300</y>
-       <width>221</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>35</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Continue</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pauseButton">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>190</y>
-       <width>181</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>35</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Engage</string>
      </property>
     </widget>
    </widget>
