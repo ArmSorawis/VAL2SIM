@@ -2,9 +2,9 @@
 <launch>
     
     <!-- ARGUMENTS -->
+    <arg name="goal_name" default="simple_goal" doc="goal type [simple_goal, solustar_goal]"/>
     <arg name="map_folder" default="simple" doc="map type [simple, solustar]"/>
     <arg name="map_name" default="simple_loc" doc="map type [simple_loc, solustar_loc]"/>
-    <arg name="goal_name" default="simple_goal" doc="goal type [simple_goal, solustar_goal]"/>
     <arg name="map_file" default="$(find val2sim_localization)/maps/$(arg map_folder)/$(arg map_name).yaml"/>
 
     <!-- VAL2 SIMULATION NODE -->
