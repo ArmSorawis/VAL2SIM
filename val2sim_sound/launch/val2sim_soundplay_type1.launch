@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="device" default="" />
+
+    <!-- ROS SOUND SUBSCRIBER NODE -->
+    <!-- Node for let sound format file can be play and giving the desired sound -->
+    <node name="soundplay_node" pkg="sound_play" type="soundplay_node.py">
+        <param name="device" value="$(arg device)" />
+    </node>
+
+    <!-- SETUP SIREN SOUND NODE -->
+    <!-- Node for sounding an alarm to obstacle to give way for robot -->
+    <node name="val2sim_silentplay_type1_node"   pkg="val2sim_sound"    type="val2sim_silentplay_type1.py" />
+
+    <!-- SETUP TOUCH SOUND NODE -->
+    <!-- Node for giving the desired sound when something touching the engage button on the screen -->
+    <node name="val2sim_touchplay_node"   pkg="val2sim_sound"    type="val2sim_touchplay.py" />
+
+</launch>

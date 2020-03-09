@@ -17,7 +17,7 @@
 
     <!-- VAL2 SOUND NODE -->
     <!-- sound player node, siren player node and touch player node-->
-    <include file="$(find val2sim_sound)/launch/val2sim_soundplay.launch" />
+    <include file="$(find val2sim_sound)/launch/val2sim_soundplay_type2.launch" />
 
     <!-- VAL2 BRIDGE NODE -->
     <!-- website bridge subscriber and pause the navigation system node -->

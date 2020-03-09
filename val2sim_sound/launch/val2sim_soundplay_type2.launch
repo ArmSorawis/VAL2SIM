@@ -10,7 +10,7 @@
 
     <!-- SETUP SIREN SOUND NODE -->
     <!-- Node for sounding an alarm to obstacle to give way for robot -->
-    <node name="val2sim_silentplay_node"   pkg="val2sim_sound"    type="val2sim_silentplay.py" />
+    <node name="val2sim_silentplay_type2_node"   pkg="val2sim_sound"    type="val2sim_silentplay_type2.py" />
 
     <!-- SETUP TOUCH SOUND NODE -->
     <!-- Node for giving the desired sound when something touching the engage button on the screen -->
